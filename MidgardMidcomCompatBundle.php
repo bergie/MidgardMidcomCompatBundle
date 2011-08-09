@@ -55,9 +55,15 @@ class MidgardMidcomCompatBundle extends Bundle
         }
 
 
-        if (!file_exists($path)) {
-            // TODO: Handle DBA classes, main.php
-            return false;
+        if (!file_exists($path))
+        {
+            $alternative_path = str_replace('.php', '/main.php', $path);
+
+            if (!file_exists($alternative_path))
+            {
+                return false;
+            }
+            $path = $alternative_path;
         }
 
         require($path);
