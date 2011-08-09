@@ -64,7 +64,7 @@ abstract class midcom_baseclasses_components_request
      * Calls handling methods of the viewer, and then handling methods
      * of the controller
      */
-    public function handle(Request $request)
+    public function handle(Request $request, array $args)
     {
         $controllerClass = $request->attributes->get('midcom_controller');
         $controller = new $controllerClass();
@@ -76,12 +76,12 @@ abstract class midcom_baseclasses_components_request
         $this->_request_data['handler_id'] = $request->attributes->get('midcom_route_id');
 
         $controllerCanMethod = '_can_handle_' . $request->attributes->get('midcom_action');
-        $controller->$controllerCanMethod($request->attributes->get('midcom_route_id'), $request->attributes->all(), $this->_request_data);
+        $controller->$controllerCanMethod($request->attributes->get('midcom_route_id'), $args, $this->_request_data);
 
-        $this->_on_handle($request->attributes->get('midcom_route_id'), $request->attributes->all());
+        $this->_on_handle($request->attributes->get('midcom_route_id'), $args);
 
         $controllerMethod = '_handler_' . $request->attributes->get('midcom_action');
-        $controller->$controllerMethod($request->attributes->get('midcom_route_id'), $request->attributes->all(), $this->_request_data);
+        $controller->$controllerMethod($request->attributes->get('midcom_route_id'), $args, $this->_request_data);
 
         $request->attributes->set('midcom_request_data', $this->_request_data);
     }

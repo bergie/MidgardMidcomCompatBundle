@@ -51,7 +51,21 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
     public function getArguments(Request $request, $controller)
     {
         return array(
-            $request
+            $request,
+            $this->cleanArguments($request)
         );
+    }
+
+    public function cleanArguments(Request $request)
+    {
+        $args = $request->attributes->all();
+        $midcomArgs = array();
+        foreach ($args as $key => $value) {
+            if (substr($key, 0, 11) != 'midcom_arg_') {
+                continue;
+            }
+            $midcomArgs[substr($key, 11)] = $value;
+        }
+        return $midcomArgs;
     }
 }
