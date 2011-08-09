@@ -2,8 +2,10 @@
 namespace Midgard\MidcomCompatBundle\Compat;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\DependencyInjection\ContainerAware;
 
-class MidcomSuperglobal
+class MidcomSuperglobal extends ContainerAware
 {
     protected $request = null;
 
@@ -17,6 +19,10 @@ class MidcomSuperglobal
     {
         $serviceImplementation = "midcom_services_{$service}";
         $this->$service = new $serviceImplementation();
+
+        if ($this->$service instanceof ContainerAware) {
+            $this->$service->setContainer($this->container);
+        }
     }
 
     public function __get($key)
@@ -53,5 +59,10 @@ class MidcomSuperglobal
 
     public function add_link_head($attributes = null)
     {
+    }
+
+    public function relocate($url)
+    {
+        $this->request->attributes->set('midcom_response', new RedirectResponse($url));
     }
 }

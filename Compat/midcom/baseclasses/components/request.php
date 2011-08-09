@@ -51,13 +51,13 @@ abstract class midcom_baseclasses_components_request
         $topics = $qs->list_objects();
         if ($topics)
         {
-            return $topics[0];
+            return $_MIDCOM->dbfactory->convert_midgard_to_midcom($topics[0]);
         }
         $topic = new midgard_topic();
         $topic->name = 'midcom';
         $topic->extra = 'MidCOM topic';
         $topic->create();
-        return $topic;
+        return $_MIDCOM->dbfactory->convert_midgard_to_midcom($topic);
     }
 
     /**

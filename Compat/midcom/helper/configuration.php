@@ -2,8 +2,6 @@
 use Symfony\Component\HttpKernel\Bundle\BundleInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
-use Midgard\MidcomCompatBundle\Config\Loader\MidcomArrayLoader;
-use Symfony\Component\Config\FileLocator;
 
 class midcom_helper_configuration
 {

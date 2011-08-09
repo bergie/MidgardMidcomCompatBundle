@@ -35,6 +35,9 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
         }
 
         $_MIDCOM = new MidcomSuperglobal($request);
+        $_MIDCOM->setContainer($this->container);
+        $_MIDCOM->dbclassloader->load_classes('midcom', 'core_classes.inc');
+        $_MIDCOM->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
 
         $viewerClass = str_replace('.', '_', $request->attributes->get('midcom_component') . '_viewer');
 

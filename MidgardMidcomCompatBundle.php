@@ -12,6 +12,7 @@ class MidgardMidcomCompatBundle extends Bundle
         'midcom_helper_configuration',
         'midcom_helper_toolbar',
         'midcom_helper_l10n',
+        'midcom_helper_nav',
         'midcom_services',
         'midcom_error',
     );

@@ -27,6 +27,10 @@ class KernelViewListener
             return;
         }
 
+        if ($request->attributes->has('midcom_response')) {
+            return $event->setResponse($request->attributes->get('midcom_response'));
+        }
+
         ob_start();
         var_dump($request->attributes->get('midcom_data'));
         $response = new Response(ob_get_clean());
