@@ -12,4 +12,9 @@ class midcom_services_head
     public function add_jsfile($url, $prepend = false)
     {
     }
+
+    public function enable_jquery($version = null)
+    {
+
+    }
 }
