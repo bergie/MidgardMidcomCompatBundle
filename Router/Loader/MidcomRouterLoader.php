@@ -7,7 +7,8 @@ use Symfony\Component\Config\Resource\FileResource;
 use Symfony\Component\Config\Loader\Loader;
 use Symfony\Component\Routing\RouteCollection;
 use Symfony\Component\Routing\Route;
-use Symfony\Component\Yaml\Yaml;
+use Midgard\MidcomCompatBundle\Config\Loader\MidcomArrayLoader;
+use Symfony\Component\Config\FileLocator;
 
 class MidcomRouterLoader extends Loader
 {
@@ -38,14 +39,16 @@ class MidcomRouterLoader extends Loader
 
     public function load($resource, $type = null)
     {
-        $path = "{$this->rootDir}/" . str_replace('.', '/', $resource) . "/config/routes.inc";
-        eval('$routes = array(' . file_get_contents($path) . ');');
+        $locator = new FileLocator("{$this->rootDir}/" . str_replace('.', '/', $resource) . '/config');
+        $loader = new MidcomArrayLoader($locator);
+        $routes = $loader->load('routes.inc');
         $collection = new RouteCollection();
-        $collection->addResource(new FileResource($path));
+        $collection->addResource(new FileResource($locator->locate('routes.inc')));
 
         foreach ($routes as $route_id => $route)
         {
             $defaults = array(
+                'midcom_route_id' => $route_id,
                 'midcom_component' => $resource,
                 'midcom_controller' => $route['handler'][0],
                 'midcom_action' => "_handler_{$route['handler'][1]}",
