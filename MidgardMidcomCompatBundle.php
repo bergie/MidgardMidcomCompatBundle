@@ -7,6 +7,15 @@ use Midgard\MidcomCompatBundle\DependencyInjection\ControllerResolverPass;
 
 class MidgardMidcomCompatBundle extends Bundle
 {
+    private $compatClasses = array(
+        'midcom_baseclasses',
+        'midcom_helper_configuration',
+        'midcom_helper_toolbar',
+        'midcom_helper_l10n',
+        'midcom_services',
+        'midcom_error',
+    );
+
     public function build(ContainerBuilder $container)
     {
         parent::build($container);
@@ -16,6 +25,11 @@ class MidgardMidcomCompatBundle extends Bundle
 
     public function boot()
     {
+        if (!ini_get('midgard.superglobals_compat'))
+        {
+            throw new \Exception('You need to set midgard.superglobals_compat=On in your php.ini to run MidCOM compatibility bundle with Symfony2');
+        }
+
         define('MIDCOM_ROOT', $this->container->getParameter('midgard.midcomcompat.root'));
 
         require(__DIR__ . '/Compat/constants.php');
@@ -26,6 +40,12 @@ class MidgardMidcomCompatBundle extends Bundle
     public function autoload($className)
     {
         $path = MIDCOM_ROOT . '/' . str_replace('_', '/', $className) . '.php';
+        foreach ($this->compatClasses as $compatClass) {
+            if (substr($className, 0, strlen($compatClass)) == $compatClass) {
+                $path = str_replace(MIDCOM_ROOT, __DIR__ . '/Compat', $path);
+            }
+        }
+
         $path = str_replace('//', '/_', $path);
 
         if (!file_exists($path)) {
