@@ -33,8 +33,6 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
     {
         $_MIDCOM = new MidcomSuperglobal($request);
         $_MIDCOM->setContainer($this->container);
-        $_MIDCOM->dbclassloader->load_classes('midcom', 'core_classes.inc');
-        $_MIDCOM->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
         $_MIDGARD = array(
             'argv' => array(),
             'user' => 0,
@@ -61,6 +59,8 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
             define('MIDCOM_STATIC_URL', '/');
         }
         $GLOBALS['midcom_config'] = new \midcom_config;
+        $_MIDCOM->dbclassloader->load_classes('midcom', 'core_classes.inc');
+        $_MIDCOM->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
     }
 
     public function getController(Request $request)
