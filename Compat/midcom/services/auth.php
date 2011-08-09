@@ -5,6 +5,27 @@ use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundE
 
 class midcom_services_auth extends ContainerAware
 {
+    private function map_privilege($privilege)
+    {
+        switch ($privilege) {
+            case 'midgard:update':
+            case 'midgard:create':
+            case 'midgard:parameters':
+            case 'midgard:attachments':
+                return 'EDIT';
+            case 'midgard:read':
+                return 'VIEW';
+            case 'midgard:delete':
+                return 'DELETE';
+            case 'midgard:privileges':
+                return 'MASTER';
+            case 'midgard:owner':
+                return 'OWNER';
+            default:
+                return $privilege;
+        }
+    }
+
     public function require_do($privilege, $object, $message = null)
     {
         if ($this->can_do($privilege, $object)) {
@@ -20,6 +41,7 @@ class midcom_services_auth extends ContainerAware
 
     public function can_do($privilege, $object = null)
     {
+        $privilege = $this->map_privilege($privilege);
         try {
             return $this->container->get('security.context')->isGranted($privilege, $object);
         } catch (AuthenticationCredentialsNotFoundException $e) {

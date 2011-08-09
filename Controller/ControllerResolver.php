@@ -86,6 +86,10 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
 
     public function getArguments(Request $request, $controller)
     {
+        if (!$request->attributes->has('midcom_component')) {
+            return $this->parent->getArguments($request, $controller);
+        }
+
         return array(
             $request,
             $this->cleanArguments($request)
