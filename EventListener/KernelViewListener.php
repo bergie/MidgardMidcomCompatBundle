@@ -37,6 +37,8 @@ class KernelViewListener
         $viewer->show($request);
         $response = new Response($request->attributes->get('midcom_content'));
 
+        $request->attributes->set('midcom_request_data', null);
+
         $event->setResponse($response);
     }
 }

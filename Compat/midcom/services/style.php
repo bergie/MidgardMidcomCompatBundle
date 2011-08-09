@@ -19,10 +19,11 @@ class midcom_services_style extends RequestAware
             'midcom'
         );
 
-        var_dump(array_keys($this->request->attributes->get('midcom_request_data')));
-        die();
+        if (!isset($this->request_data)) {
+            $this->request_data = $this->request->attributes->get('midcom_request_data');
+        }
 
-        $content .= $this->container->get('templating')->render($viewName, $this->request->attributes->get('midcom_request_data'));
+        $content .= $this->container->get('templating')->render($viewName, $this->request_data);
 
         $this->request->attributes->set('midcom_content', $content);
     }

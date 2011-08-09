@@ -29,6 +29,11 @@ class MidcomSuperglobal extends RequestAware
         }
     }
 
+    public function get_service($service)
+    {
+        return $this->$service;
+    }
+
     public function load_library($library)
     {
         $library = new ComponentBundle($library); 

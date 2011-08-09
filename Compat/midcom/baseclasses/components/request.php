@@ -104,6 +104,8 @@ abstract class midcom_baseclasses_components_request
         $controller = $request->attributes->get('midcom_controller_instance');
         $controllerMethod = '_show_' . $request->attributes->get('midcom_action');
 
+        $_MIDCOM->style->request_data =& $this->_request_data;
+
         $controller->$controllerMethod($request->attributes->get('midcom_route_id'), &$this->_request_data);
 
         $request->attributes->set('midcom_request_data', &$this->_request_data);
