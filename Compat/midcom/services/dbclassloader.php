@@ -35,4 +35,20 @@ class midcom_services_dbclassloader extends ContainerAware
 
         return $this->mappings[get_class($object)];
     }
+
+    public function is_midcom_db_object($object)
+    {
+        if (is_object($object))
+        {
+            return (is_a($object, 'midcom_core_dbaobject') || is_a($object, 'midcom_core_dbaproxy'));
+        }
+        else if (   is_string($object)
+                 && class_exists($object))
+        {
+            $dummy = new $object();
+            return is_a($dummy, 'midcom_core_dbaobject');
+        }
+
+        return false;
+    }
 }
