@@ -3,14 +3,28 @@ namespace Midgard\MidcomCompatBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
+use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Midgard\MidcomCompatBundle\Config\Loader\MidcomArrayLoader;
+use Midgard\MidcomCompatBundle\Compat\MidcomSuperglobal;
+use Symfony\Component\Config\FileLocator;
 
-class ControllerResolver implements ControllerResolverInterface
+class ControllerResolver extends ContainerAware implements ControllerResolverInterface
 {
     private $parent;
 
-    public function __construct(ControllerResolverInterface $parent)
+    public function __construct(ContainerInterface $container, ControllerResolverInterface $parent)
     {
         $this->parent = $parent;
+        $this->setContainer($container);
+    }
+
+    protected function getRequestConfig(Request $request)
+    {
+        $parameter = 'midgard.midcomcompat.' . str_replace('.', '_', $request->attributes->get('midcom_component'));
+        $loader = new MidcomArrayLoader(new FileLocator($this->container->getParameter($parameter)));
+        return new ParameterBag($loader->load('config.inc'));
     }
 
     public function getController(Request $request)
@@ -20,27 +34,24 @@ class ControllerResolver implements ControllerResolverInterface
             return $this->parent->getController($request);
         }
 
-        $controller_class = $request->attributes->get('midcom_controller');
+        $_MIDCOM = new MidcomSuperglobal($request);
 
-        $controller = new $controller_class();
+        $viewerClass = str_replace('.', '_', $request->attributes->get('midcom_component') . '_viewer');
 
-        return array($controller, $request->attributes->get('midcom_action'));
+        $config = $this->getRequestConfig($request);
+
+        $viewer = new $viewerClass();
+        $viewer->initialize($request, $config);
+
+        // TODO: Call can_handle and pass to parent->getController if not
+
+        return array($viewer, 'handle');
     }
 
     public function getArguments(Request $request, $controller)
     {
-        if (!$request->attributes->has('midcom_component')) {
-            // Not a MidCOM request, pass to parent
-            return $this->parent->getArguments($request, $controller);
-        }
-
-        $data = array();
-        $request->attributes->set('midcom_data', $data);
-
         return array(
-            'foo',
-            $request->attributes->all(),
-            $data
+            $request
         );
     }
 }

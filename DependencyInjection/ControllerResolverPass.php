@@ -13,7 +13,7 @@ class ControllerResolverPass implements CompilerPassInterface
         $cr = $container->getDefinition('controller_resolver');
         $container->setDefinition('midgard.midcomcompat.controller_resolver.original', $cr);
         $def = new Definition('Midgard\MidcomCompatBundle\Controller\ControllerResolver');
-        $def->setArguments(array(new Reference('midgard.midcomcompat.controller_resolver.original')));
+        $def->setArguments(array(new Reference('service_container'), new Reference('midgard.midcomcompat.controller_resolver.original')));
         $container->setDefinition('controller_resolver', $def);
     }
 }
