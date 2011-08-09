@@ -15,6 +15,7 @@ class MidgardMidcomCompatBundle extends Bundle
         'midcom_helper_nav',
         'midcom_services',
         'midcom_error',
+        'midcom_config',
     );
 
     public function build(ContainerBuilder $container)

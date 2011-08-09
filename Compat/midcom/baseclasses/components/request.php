@@ -86,7 +86,7 @@ abstract class midcom_baseclasses_components_request
         $request->attributes->set('midcom_request_data', $this->_request_data);
     }
 
-    public function _on_handle($handler_id, array $args)
+    public function _on_handle($handler_id, $args)
     {
         return true;
     }

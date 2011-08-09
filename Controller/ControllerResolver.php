@@ -27,6 +27,40 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
         return new ParameterBag($loader->load('config.inc'));
     }
 
+    private function prepareSuperGlobals(Request $request)
+    {
+        $_MIDCOM = new MidcomSuperglobal($request);
+        $_MIDCOM->setContainer($this->container);
+        $_MIDCOM->dbclassloader->load_classes('midcom', 'core_classes.inc');
+        $_MIDCOM->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
+        $_MIDGARD = array(
+            'argv' => array(),
+            'user' => 0,
+            'admin' => false,
+            'root' => false,
+            'auth' => false,
+            'cookieauth' => false,
+            'page' => 0,
+            'debug' => false,
+            'host' => 0,
+            'style' => 0,
+            'author' => 0,
+            'config' => array(
+	            'prefix' => '',
+		        'quota' => false,
+		        'unique_host_name' => 'sf2',
+		        'auth_cookie_id' => 1,
+	        ),
+            'schema' => array(
+	            'types' => array(),
+	        ),
+        );
+        if (!defined('MIDCOM_STATIC_URL')) {
+            define('MIDCOM_STATIC_URL', '/');
+        }
+        $GLOBALS['midcom_config'] = new \midcom_config;
+    }
+
     public function getController(Request $request)
     {
         if (!$request->attributes->has('midcom_component')) {
@@ -34,10 +68,7 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
             return $this->parent->getController($request);
         }
 
-        $_MIDCOM = new MidcomSuperglobal($request);
-        $_MIDCOM->setContainer($this->container);
-        $_MIDCOM->dbclassloader->load_classes('midcom', 'core_classes.inc');
-        $_MIDCOM->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
+        $this->prepareSuperGlobals($request);
 
         $viewerClass = str_replace('.', '_', $request->attributes->get('midcom_component') . '_viewer');
 
