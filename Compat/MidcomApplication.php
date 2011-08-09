@@ -70,6 +70,12 @@ class MidcomApplication extends RequestAware
 
     public function add_link_head($attributes = null)
     {
+        $this->head->add_link_head($attributes);
+    }
+
+    public function add_jsfile($url, $prepend = false)
+    {
+        $this->head->add_jsfile($url, $prepend);
     }
 
     public function relocate($url)
