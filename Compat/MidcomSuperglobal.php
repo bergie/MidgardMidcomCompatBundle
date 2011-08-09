@@ -25,6 +25,10 @@ class MidcomSuperglobal extends ContainerAware
         }
     }
 
+    public function load_library($library)
+    {
+    }
+
     public function __get($key)
     {
         $this->load_service($key);

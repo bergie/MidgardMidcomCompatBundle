@@ -72,6 +72,8 @@ abstract class midcom_baseclasses_components_request
         $controller->_node_toolbar = $this->_node_toolbar;
         $controller->_view_toolbar = $this->_view_toolbar;
         $controller->_topic = $this->_topic;
+        $controller->_l10n = $this->_l10n;
+        $controller->_request_data =& $this->_request_data;
 
         $this->_request_data['handler_id'] = $request->attributes->get('midcom_route_id');
 

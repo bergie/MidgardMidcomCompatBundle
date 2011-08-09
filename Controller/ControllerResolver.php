@@ -10,6 +10,8 @@ use Midgard\MidcomCompatBundle\Config\Loader\MidcomArrayLoader;
 use Midgard\MidcomCompatBundle\Compat\MidcomSuperglobal;
 use Symfony\Component\Config\FileLocator;
 
+require __DIR__ . '/../Compat/debug.php';
+
 class ControllerResolver extends ContainerAware implements ControllerResolverInterface
 {
     private $parent;
