@@ -18,4 +18,10 @@ class midcom_services_componentloader
     {
         new ComponentBundle($path);
     }
+
+    public function load_graceful($path)
+    {
+        $this->load($path);
+    }
+
 }
