@@ -81,8 +81,10 @@ abstract class midcom_baseclasses_components_request
         $this->_request_data['handler_id'] = $request->attributes->get('midcom_route_id');
 
         $controllerCanMethod = '_can_handle_' . $request->attributes->get('midcom_action');
-        $controller->$controllerCanMethod($request->attributes->get('midcom_route_id'), $args, $this->_request_data);
-
+        if (method_exists($controller, $controllerCanMethod))
+        {
+            $controller->$controllerCanMethod($request->attributes->get('midcom_route_id'), $args, $this->_request_data);
+        }
         $this->_on_handle($request->attributes->get('midcom_route_id'), $args);
 
         $controllerMethod = '_handler_' . $request->attributes->get('midcom_action');
