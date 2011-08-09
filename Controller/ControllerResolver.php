@@ -7,7 +7,6 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Midgard\MidcomCompatBundle\Config\Loader\MidcomArrayLoader;
-use Midgard\MidcomCompatBundle\Compat\MidcomSuperglobal;
 use Symfony\Component\Config\FileLocator;
 
 require __DIR__ . '/../Compat/debug.php';
@@ -31,7 +30,7 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
 
     private function prepareSuperGlobals(Request $request)
     {
-        $_MIDCOM = new MidcomSuperglobal();
+        $_MIDCOM = \midcom::get();
         $_MIDCOM->setRequest($request);
         $_MIDCOM->setContainer($this->container);
         $_MIDGARD = array(
