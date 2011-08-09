@@ -19,9 +19,12 @@ class ComponentBundle extends ContainerAware implements BundleInterface
 
     public function boot()
     {
-        $interfaceFile = $this->getPath() . "/midcom/interfaces.php";
-        require($interfaceFile);
-        $interfaceClass = str_replace('.', '_', $this->name) . "_interface"; 
+        $interfaceClass = str_replace('.', '_', $this->name) . "_interface";  
+        if (!class_exists($interfaceClass)) {
+            $interfaceFile = $this->getPath() . "/midcom/interfaces.php";
+            require($interfaceFile);
+        }
+        
         $this->interface = new $interfaceClass();
         $this->interface->_on_initialize();
     }

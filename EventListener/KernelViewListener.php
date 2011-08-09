@@ -31,8 +31,10 @@ class KernelViewListener
             return $event->setResponse($request->attributes->get('midcom_response'));
         }
 
+        $viewer = $request->attributes->get('midcom_viewer_instance');
         ob_start();
-        var_dump($request->attributes->get('midcom_data'));
+        $viewer->show($request);
+        var_dump(array_keys($request->attributes->get('midcom_request_data')));
         $response = new Response(ob_get_clean());
 
         $event->setResponse($response);

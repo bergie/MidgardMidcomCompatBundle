@@ -79,7 +79,7 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
         $viewer = new $viewerClass();
         $viewer->initialize($request, $config);
 
-        // TODO: Call can_handle and pass to parent->getController if not
+        $request->attributes->set('midcom_viewer_instance', $viewer);
 
         return array($viewer, 'handle');
     }

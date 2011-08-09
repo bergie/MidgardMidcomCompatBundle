@@ -4,6 +4,7 @@ namespace Midgard\MidcomCompatBundle\Compat;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Midgard\MidcomCompatBundle\Bundle\ComponentBundle;
 
 class MidcomSuperglobal extends ContainerAware
 {
@@ -27,6 +28,9 @@ class MidcomSuperglobal extends ContainerAware
 
     public function load_library($library)
     {
+        $library = new ComponentBundle($library); 
+        $library->setContainer($this->container);
+        $library->boot();
     }
 
     public function __get($key)

@@ -70,13 +70,14 @@ abstract class midcom_baseclasses_components_request
     {
         $controllerClass = $request->attributes->get('midcom_controller');
         $controller = new $controllerClass();
-
+        $controller->_config = $this->_config;
         $controller->_node_toolbar = $this->_node_toolbar;
         $controller->_view_toolbar = $this->_view_toolbar;
         $controller->_topic = $this->_topic;
         $controller->_l10n = $this->_l10n;
         $controller->_l10n_midcom = $this->_l10n_midcom;
         $controller->_request_data =& $this->_request_data;
+        $controller->data =& $this->_request_data;
 
         $this->_request_data['handler_id'] = $request->attributes->get('midcom_route_id');
 
@@ -88,10 +89,25 @@ abstract class midcom_baseclasses_components_request
         $controllerMethod = '_handler_' . $request->attributes->get('midcom_action');
         $controller->$controllerMethod($request->attributes->get('midcom_route_id'), $args, $this->_request_data);
 
+        $request->attributes->set('midcom_controller_instance', $controller);
         $request->attributes->set('midcom_request_data', $this->_request_data);
     }
 
     public function _on_handle($handler_id, $args)
+    {
+        return true;
+    }
+
+    public function show(Request $request)
+    {
+        $controller = $request->attributes->get('midcom_controller_instance');
+        $controllerMethod = '_show_' . $request->attributes->get('midcom_action');
+
+        $controller->$controllerMethod($request->attributes->get('midcom_route_id'), $request->attributes->get('midcom_request_data'));
+
+    }
+
+    public function _on_show($handler_id)
     {
         return true;
     }
