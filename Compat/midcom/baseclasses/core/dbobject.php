@@ -15,4 +15,9 @@ class midcom_baseclasses_core_dbobject
     {
         return $object->__object->parameter($domain, $name);
     }
+
+    public static function list_parameters($object, $domain)
+    {
+        return $object->__object->list_parameters($object, $domain);
+    }
 }

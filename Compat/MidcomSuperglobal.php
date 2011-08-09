@@ -69,4 +69,18 @@ class MidcomSuperglobal extends ContainerAware
     {
         $this->request->attributes->set('midcom_response', new RedirectResponse($url));
     }
+
+    public function set_pagetitle($title)
+    {
+        $this->request->attributes->set('midcom_title', $title);
+    }
+
+    public function bind_view_to_object($object)
+    {
+        $this->request->attributes->set('midcom_object', $object);
+    }
+
+    public function set_26_request_metadata()
+    {
+    }
 }

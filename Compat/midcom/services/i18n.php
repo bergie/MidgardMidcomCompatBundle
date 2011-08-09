@@ -5,4 +5,9 @@ class midcom_services_i18n
     {
         return new midcom_helper_l10n();
     }
+
+    public function get_string($string, $component, $database = null)
+    {
+        return "!!{$string}";
+    }
 }
