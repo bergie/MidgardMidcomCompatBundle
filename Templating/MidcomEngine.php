@@ -37,7 +37,7 @@ class MidcomEngine implements EngineInterface
     private function preparse($code)
     {
         // Get style elements
-        $code = preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array('midcom_helper_misc', 'includeElement'), $code);
+        $code = preg_replace_callback("/<\\(([a-zA-Z0-9 _-]+)\\)>/", array($this, 'includeElement'), $code);
         // Echo variables
         $code = preg_replace_callback("%&\(([^)]*)\);%i", array($this, 'expandVariable'), $code);
         return $code;
