@@ -10,4 +10,9 @@ class midcom_services_i18n
     {
         return "!!{$string}";
     }
+
+    public function get_current_language()
+    {
+        return 'en';
+    }
 }
