@@ -51,7 +51,7 @@ class MidcomRouterLoader extends Loader
                 'midcom_route_id' => $route_id,
                 'midcom_component' => $resource,
                 'midcom_controller' => $route['handler'][0],
-                'midcom_action' => "_handler_{$route['handler'][1]}",
+                'midcom_action' => $route['handler'][1],
             );
 
             if (!isset($route['fixed_args'])) {

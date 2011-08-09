@@ -39,6 +39,20 @@ abstract class midcom_baseclasses_components_request
 
     private function prepare_topic(Request $request)
     {
+        $qs = new midgard_query_select(new midgard_query_storage('midgard_topic'));
+        $qs->set_constraint(
+            new midgard_query_constraint(
+                new midgard_query_property('name'),
+                '=',
+                new midgard_query_value('midcom')
+            )
+        );
+        $qs->execute();
+        $topics = $qs->list_objects();
+        if ($topics)
+        {
+            return $topics[0];
+        }
         $topic = new midgard_topic();
         $topic->name = 'midcom';
         $topic->extra = 'MidCOM topic';
@@ -53,16 +67,20 @@ abstract class midcom_baseclasses_components_request
     public function handle(Request $request)
     {
         $controllerClass = $request->attributes->get('midcom_controller');
-        $controllerMethod = $request->attributes->get('midcom_action');
         $controller = new $controllerClass();
 
         $controller->_node_toolbar = $this->_node_toolbar;
         $controller->_view_toolbar = $this->_view_toolbar;
+        $controller->_topic = $this->_topic;
 
         $this->_request_data['handler_id'] = $request->attributes->get('midcom_route_id');
 
+        $controllerCanMethod = '_can_handle_' . $request->attributes->get('midcom_action');
+        $controller->$controllerCanMethod($request->attributes->get('midcom_route_id'), $request->attributes->all(), $this->_request_data);
+
         $this->_on_handle($request->attributes->get('midcom_route_id'), $request->attributes->all());
 
+        $controllerMethod = '_handler_' . $request->attributes->get('midcom_action');
         $controller->$controllerMethod($request->attributes->get('midcom_route_id'), $request->attributes->all(), $this->_request_data);
 
         $request->attributes->set('midcom_request_data', $this->_request_data);
