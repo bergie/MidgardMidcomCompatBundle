@@ -4,15 +4,14 @@ namespace Midgard\MidcomCompatBundle\Compat;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerAware;
+use Midgard\MidcomCompatBundle\DependencyInjection\RequestAware;
 use Midgard\MidcomCompatBundle\Bundle\ComponentBundle;
 
-class MidcomSuperglobal extends ContainerAware
+class MidcomSuperglobal extends RequestAware
 {
-    protected $request = null;
-
-    public function __construct(Request $request)
+    public function setRequest(Request $request)
     {
-        $this->request = $request;
+        parent::setRequest($request);
         $this->prepare_context_data();
     }
 
@@ -20,6 +19,10 @@ class MidcomSuperglobal extends ContainerAware
     {
         $serviceImplementation = "midcom_services_{$service}";
         $this->$service = new $serviceImplementation();
+
+        if ($this->$service instanceof RequestAware) {
+            $this->$service->setRequest($this->request);
+        }
 
         if ($this->$service instanceof ContainerAware) {
             $this->$service->setContainer($this->container);

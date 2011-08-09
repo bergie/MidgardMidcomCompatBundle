@@ -5,4 +5,9 @@ class midcom_helper_nav
     {
         return null;
     }
+
+    public function get_current_node()
+    {
+        return null;
+    }
 }

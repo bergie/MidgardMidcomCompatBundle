@@ -50,6 +50,11 @@ class MidgardMidcomCompatBundle extends Bundle
 
         $path = str_replace('//', '/_', $path);
 
+        if (basename($path) == 'dba.php' || basename($path) == 'db.php') {
+            $path = dirname($path) . '.php';
+        }
+
+
         if (!file_exists($path)) {
             // TODO: Handle DBA classes, main.php
             return false;

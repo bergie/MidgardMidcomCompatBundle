@@ -6,6 +6,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpFoundation\Response;
 
+require __DIR__ . '/../Compat/show.php';
+
 class KernelViewListener
 {
     private $container;
@@ -32,10 +34,8 @@ class KernelViewListener
         }
 
         $viewer = $request->attributes->get('midcom_viewer_instance');
-        ob_start();
         $viewer->show($request);
-        var_dump(array_keys($request->attributes->get('midcom_request_data')));
-        $response = new Response(ob_get_clean());
+        $response = new Response($request->attributes->get('midcom_content'));
 
         $event->setResponse($response);
     }

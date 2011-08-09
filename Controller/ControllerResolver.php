@@ -31,7 +31,8 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
 
     private function prepareSuperGlobals(Request $request)
     {
-        $_MIDCOM = new MidcomSuperglobal($request);
+        $_MIDCOM = new MidcomSuperglobal();
+        $_MIDCOM->setRequest($request);
         $_MIDCOM->setContainer($this->container);
         $_MIDGARD = array(
             'argv' => array(),
