@@ -22,5 +22,9 @@ class MidgardMidcomCompatExtension extends Extension
         }
 
         $container->setParameter('midgard.midcomcompat.root', $rootDir);
+
+        if (isset($configs[0]['layout'])) {
+            $container->setParameter('midgard.midcomcompat.layout', $configs[0]['layout']);
+        }
     }
 }

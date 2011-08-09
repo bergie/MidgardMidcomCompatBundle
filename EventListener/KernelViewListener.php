@@ -35,7 +35,19 @@ class KernelViewListener
 
         $viewer = $request->attributes->get('midcom_viewer_instance');
         $viewer->show($request);
-        $response = new Response($request->attributes->get('midcom_content'));
+        $content = $request->attributes->get('midcom_content');
+
+        if ($this->container->hasParameter('midgard.midcomcompat.layout')) {
+            $content = $this->container->get('templating')->render(
+                $this->container->getParameter('midgard.midcomcompat.layout'),
+                array(
+                    'content' => $content,
+                )
+            );
+        }
+
+
+        $response = new Response($content);
 
         $request->attributes->set('midcom_request_data', null);
 

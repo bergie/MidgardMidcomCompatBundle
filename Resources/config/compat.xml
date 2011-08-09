@@ -6,6 +6,7 @@
 
     <parameters>
         <parameter key="midgard.midcomcompat.root" />
+        <parameter key="midgard.midcomcompat.layout" />
     </parameters>
 
     <services>
