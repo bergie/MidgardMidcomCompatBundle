@@ -10,7 +10,7 @@ use Symfony\Component\Finder\Finder;
 class ComponentBundle extends ContainerAware implements BundleInterface
 {
     private $name = '';
-    private $inteface = null;
+    private $interface = null;
 
     public function __construct($name)
     {
@@ -23,7 +23,6 @@ class ComponentBundle extends ContainerAware implements BundleInterface
         require($interfaceFile);
         $interfaceClass = str_replace('.', '_', $this->name) . "_interface"; 
         $this->interface = new $interfaceClass();
-
         $this->interface->_on_initialize();
     }
 
@@ -37,7 +36,7 @@ class ComponentBundle extends ContainerAware implements BundleInterface
 
     public function getContainerExtension()
     {
-        return null;
+        return new ComponentExtension($this->name);
     }
 
     public function getParent()
