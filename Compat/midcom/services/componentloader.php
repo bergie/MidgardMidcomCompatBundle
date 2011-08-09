@@ -5,4 +5,9 @@ class midcom_services_componentloader
     {
         return true;
     }
+
+    public function path_to_prefix ($path)
+    {
+        return strtr($path, ".", "_");
+    }
 }
