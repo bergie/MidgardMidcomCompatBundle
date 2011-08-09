@@ -35,6 +35,44 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
         }
 
         $_MIDCOM = new MidcomSuperglobal($request);
+	$_MIDGARD = array
+	(
+	    'argv' => array(),
+
+	    'user' => 0,
+	    'admin' => false,
+	    'root' => false,
+
+	    'auth' => false,
+	    'cookieauth' => false,
+
+	    // General host setup
+	    'page' => 0,
+	    'debug' => false,
+
+	    'host' => 0,
+	    'style' => 0,
+	    'author' => 0,
+	    'config' => array
+	    (
+	        'prefix' => '',
+		'quota' => false,
+		'unique_host_name' => 'openpsa',
+		'auth_cookie_id' => 1,
+	    ),
+
+	    'schema' => array
+	    (
+	        'types' => array(),
+	    ),
+	);
+
+	if (!defined('MIDCOM_STATIC_URL'))
+	{
+            define('MIDCOM_STATIC_URL', '/');
+	}
+
+	$GLOBALS['midcom_config'] = new \midcom_config;
 
         $viewerClass = str_replace('.', '_', $request->attributes->get('midcom_component') . '_viewer');
 
