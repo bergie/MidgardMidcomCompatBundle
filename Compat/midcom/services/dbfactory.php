@@ -27,8 +27,9 @@ class midcom_services_dbfactory
         return $object->__object;
     }
 
-    public static function get_cached($classname, $identifier)
+    public static function &get_cached($classname, $identifier)
     {
-        return new $classname($identifier);
+        $object = new $classname($identifier);
+        return $object;
     }
 }
