@@ -77,7 +77,6 @@ abstract class midcom_baseclasses_components_request
         $controller->_l10n = $this->_l10n;
         $controller->_l10n_midcom = $this->_l10n_midcom;
         $controller->_request_data =& $this->_request_data;
-        $controller->data =& $this->_request_data;
 
         $this->_request_data['handler_id'] = $request->attributes->get('midcom_route_id');
 

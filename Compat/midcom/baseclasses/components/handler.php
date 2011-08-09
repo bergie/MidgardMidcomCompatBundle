@@ -2,6 +2,7 @@
 abstract class midcom_baseclasses_components_handler
 {
     public $_component = '';
+    public $_config;
     public $_request_data = array();
 
     private $_services = array();
@@ -28,9 +29,6 @@ abstract class midcom_baseclasses_components_handler
                 break;
             case '_l10n_midcom':
                 $instance = $_MIDCOM->i18n->get_l10n('midcom');
-                break;
-            case '_config':
-                $instance = midcom_baseclasses_components_configuration::get($this->_component, 'config');
                 break;
             default:
                 debug_add('Component ' . $this->_component . ' tried to access nonexistant service "' . $field . '"', MIDCOM_LOG_ERROR);
