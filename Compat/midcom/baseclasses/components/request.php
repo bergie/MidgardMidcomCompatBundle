@@ -28,7 +28,9 @@ abstract class midcom_baseclasses_components_request
         $this->_node_toolbar = new midcom_helper_toolbar();
         $this->_view_toolbar = new midcom_helper_toolbar();
         $this->_l10n = $_MIDCOM->i18n->get_l10n();
+        $this->_l10n_midcom = $_MIDCOM->i18n->get_l10n();
         $this->_request_data['l10n'] = $this->_l10n;
+        $this->_request_data['l10n_midcom'] = $this->_l10n_midcom;
 
         $this->_on_initialize();
     }
@@ -73,6 +75,7 @@ abstract class midcom_baseclasses_components_request
         $controller->_view_toolbar = $this->_view_toolbar;
         $controller->_topic = $this->_topic;
         $controller->_l10n = $this->_l10n;
+        $controller->_l10n_midcom = $this->_l10n_midcom;
         $controller->_request_data =& $this->_request_data;
 
         $this->_request_data['handler_id'] = $request->attributes->get('midcom_route_id');

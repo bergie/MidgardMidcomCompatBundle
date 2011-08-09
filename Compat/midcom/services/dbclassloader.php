@@ -21,6 +21,9 @@ class midcom_services_dbclassloader extends ContainerAware
 
     public function is_mgdschema_object($object)
     {
+        if ($object instanceof midcom_core_dbaobject) {
+            return true;
+        }
         return $object instanceof midgard_object;
     }
 
