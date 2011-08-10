@@ -18,11 +18,6 @@ class midcom_services_auth extends ContainerAware
         throw new AccessDeniedException($message);
     }
 
-    public function require_valid_user()
-    {
-        return (null !== $this->user);
-    }
-
     public function can_do($privilege, $object = null)
     {
         try {
