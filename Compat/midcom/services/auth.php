@@ -18,6 +18,11 @@ class midcom_services_auth extends ContainerAware
         throw new AccessDeniedException($message);
     }
 
+    public function require_valid_user()
+    {
+        return (null !== $this->user);
+    }
+
     public function can_do($privilege, $object = null)
     {
         try {
@@ -53,6 +58,11 @@ class midcom_services_auth extends ContainerAware
             $message = $this->container->get('translator')->trans('access denied: admin level privileges required', array(), 'midcom');
         }
         throw new AccessDeniedException($message);
+    }
+
+    public function can_user_do($privilege, $user = null, $class = null, $component = null)
+    {
+        return true;
     }
 
     public function __get($key)

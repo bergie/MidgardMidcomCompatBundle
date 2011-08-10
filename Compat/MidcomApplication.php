@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerAware;
 use Midgard\MidcomCompatBundle\DependencyInjection\RequestAware;
 use Midgard\MidcomCompatBundle\Bundle\ComponentBundle;
 
-class MidcomSuperglobal extends RequestAware
+class MidcomApplication extends RequestAware
 {
     public function setRequest(Request $request)
     {
@@ -27,11 +27,6 @@ class MidcomSuperglobal extends RequestAware
         if ($this->$service instanceof ContainerAware) {
             $this->$service->setContainer($this->container);
         }
-    }
-
-    public function get_service($service)
-    {
-        return $this->$service;
     }
 
     public function load_library($library)

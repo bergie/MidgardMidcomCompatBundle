@@ -7,7 +7,7 @@ use Midgard\MidcomCompatBundle\DependencyInjection\ControllerResolverPass;
 
 class MidgardMidcomCompatBundle extends Bundle
 {
-    private $compatClasses = array(
+    private $compatPrefixes = array(
         'midcom_baseclasses',
         'midcom_helper_configuration',
         'midcom_helper_toolbar',
@@ -16,6 +16,10 @@ class MidgardMidcomCompatBundle extends Bundle
         'midcom_services',
         'midcom_error',
         'midcom_config',
+    );
+
+    private $compatClasses = array(
+        'midcom',
     );
 
     public function build(ContainerBuilder $container)
@@ -42,8 +46,14 @@ class MidgardMidcomCompatBundle extends Bundle
     public function autoload($className)
     {
         $path = MIDCOM_ROOT . '/' . str_replace('_', '/', $className) . '.php';
+        foreach ($this->compatPrefixes as $compatPrefix) {
+            if (substr($className, 0, strlen($compatPrefix)) == $compatPrefix) {
+                $path = str_replace(MIDCOM_ROOT, __DIR__ . '/Compat', $path);
+            }
+        }
+
         foreach ($this->compatClasses as $compatClass) {
-            if (substr($className, 0, strlen($compatClass)) == $compatClass) {
+            if ($className == $compatClass) {
                 $path = str_replace(MIDCOM_ROOT, __DIR__ . '/Compat', $path);
             }
         }
