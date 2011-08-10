@@ -82,6 +82,10 @@ class midcom_services_auth extends ContainerAware
         return true;
     }
 
+    public function get_user()
+    {
+    }
+
     public function __get($key)
     {
         if ($key == 'user') {

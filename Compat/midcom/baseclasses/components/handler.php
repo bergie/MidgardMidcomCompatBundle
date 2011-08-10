@@ -7,6 +7,10 @@ abstract class midcom_baseclasses_components_handler
 
     private $_services = array();
 
+    public function _on_initialize()
+    {
+    }
+
     public function add_stylesheet($url, $media = false)
     {
     }

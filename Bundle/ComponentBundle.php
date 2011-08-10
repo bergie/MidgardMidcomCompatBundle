@@ -28,6 +28,12 @@ class ComponentBundle extends ContainerAware implements BundleInterface
         $this->prepareSuperGlobals();
         
         $this->interface = new $interfaceClass();
+
+        foreach ($this->interface->get_autoload_files() as $file)
+        {
+            require($this->getPath() . "/{$file}");
+        }
+
         $this->interface->_on_initialize();
     }
 

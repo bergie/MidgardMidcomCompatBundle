@@ -8,4 +8,8 @@ class midcom_services_cache_content
     public function register()
     {
     }
+
+    public function content_type()
+    {
+    }
 }
