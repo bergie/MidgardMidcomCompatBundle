@@ -11,6 +11,10 @@ abstract class midcom_baseclasses_components_handler
     {
     }
 
+    public function add_breadcrumb($url, $title)
+    {
+    }
+
     public function __get($field)
     {
         if (array_key_exists($field, $this->_services))
