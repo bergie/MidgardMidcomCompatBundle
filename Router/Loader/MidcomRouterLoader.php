@@ -80,6 +80,8 @@ class MidcomRouterLoader extends Loader
             $reqs = array();
             $options = array();
 
+            $route_id = str_replace('-', '_', $route_id);
+
             $route = new Route($path, $defaults, $reqs, $options);
             $collection->add($route_id, $route);
         }
