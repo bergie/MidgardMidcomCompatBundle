@@ -8,6 +8,13 @@ class midcom_services_dbfactory
         return $qb;
     }
 
+    function new_collector($classname, $domain, $value)
+    {
+        $mc = new midcom_core_collector($classname, $domain, $value);
+        $mc->initialize();
+        return $mc;
+    }
+
     public function convert_midgard_to_midcom(midgard_object $object)
     {
         $classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($object);

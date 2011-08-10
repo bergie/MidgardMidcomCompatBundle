@@ -13,7 +13,7 @@ abstract class midcom_baseclasses_components_request
      * Prepares MidCOM-level Request Data and calls the Component's
      * _on_initialize method
      */
-    public function initialize(Request $request, ParameterBag $config)
+    final public function initialize(Request $request, ParameterBag $config)
     {
         $this->_request_data['config'] = $config;
         $this->_config =& $this->_request_data['config'];
@@ -36,6 +36,10 @@ abstract class midcom_baseclasses_components_request
     }
 
     public function _on_initialize()
+    {
+    }
+
+    public function _on_can_handle($argc, $argv)
     {
     }
 
@@ -77,6 +81,8 @@ abstract class midcom_baseclasses_components_request
         $controller->_l10n = $this->_l10n;
         $controller->_l10n_midcom = $this->_l10n_midcom;
         $controller->_request_data =& $this->_request_data;
+
+        $this->_on_can_handle($args, sizeof($args));
 
         $this->_request_data['handler_id'] = $request->attributes->get('midcom_route_id');
 
