@@ -96,4 +96,9 @@ class MidcomApplication extends RequestAware
     public function set_26_request_metadata()
     {
     }
+
+    public function get_host_name()
+    {
+        return '';
+    }
 }

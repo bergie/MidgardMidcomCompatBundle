@@ -5,4 +5,9 @@ class midcom_helper_l10n
     {
         return "!!{$string}";
     }
+
+    public function string_available($string)
+    {
+        return false;
+    }
 }

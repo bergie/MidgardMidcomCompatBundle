@@ -95,5 +95,10 @@ class midcom_services_auth extends ContainerAware
         if ($key == 'admin') {
             return $this->can_do('ROLE_ADMIN');
         }
+
+        if ($key == 'acl') {
+            $this->acl = new midcom_services_auth_acl($this);
+            return $this->acl;
+        }
     }
 }
