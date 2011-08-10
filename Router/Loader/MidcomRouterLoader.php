@@ -47,6 +47,10 @@ class MidcomRouterLoader extends Loader
 
         foreach ($routes as $route_id => $route)
         {
+            if (is_string($route['handler']))
+            {
+                $route['handler'] = array(str_replace('.', '_', $resource) . '_viewer', $route['handler']);
+            }
             $defaults = array(
                 'midcom_route_id' => $route_id,
                 'midcom_component' => $resource,

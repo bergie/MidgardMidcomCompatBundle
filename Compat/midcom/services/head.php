@@ -7,6 +7,9 @@ class midcom_services_head
 
     public function add_stylesheet($url, $media = false)
     {
+    }
 
+    public function add_jsfile($url, $prepend = false)
+    {
     }
 }
