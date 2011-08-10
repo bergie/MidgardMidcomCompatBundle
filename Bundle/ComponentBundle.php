@@ -24,9 +24,52 @@ class ComponentBundle extends ContainerAware implements BundleInterface
             $interfaceFile = $this->getPath() . "/midcom/interfaces.php";
             require($interfaceFile);
         }
+
+        $this->prepareSuperGlobals();
         
         $this->interface = new $interfaceClass();
         $this->interface->_on_initialize();
+    }
+
+    private function prepareSuperGlobals()
+    {
+        if (!isset($_MIDCOM)) {
+           $_MIDCOM = \midcom::get();
+        }
+
+        if (!isset($_MIDGARD)) {
+            $_MIDGARD = array(
+                'argv' => array(),
+                'user' => 0,
+                'admin' => false,
+                'root' => false,
+                'auth' => false,
+                'cookieauth' => false,
+                'page' => 0,
+                'debug' => false,
+                'host' => 0,
+                'style' => 0,
+                'author' => 0,
+                'config' => array(
+	                'prefix' => '',
+		            'quota' => false,
+		            'unique_host_name' => 'sf2',
+		            'auth_cookie_id' => 1,
+	            ),
+                'schema' => array(
+	                'types' => array(),
+	            ),
+            );
+        }
+
+        if (!defined('MIDCOM_STATIC_URL')) {
+            define('MIDCOM_STATIC_URL', '/');
+        }
+
+        if (!isset($GLOBALS['midcom_config']))
+        {
+            $GLOBALS['midcom_config'] = new \midcom_config;
+        }
     }
 
     public function shutdown()

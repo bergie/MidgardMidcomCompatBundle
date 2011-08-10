@@ -30,35 +30,9 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
 
     private function prepareSuperGlobals(Request $request)
     {
-        $_MIDCOM = \midcom::get();
         $_MIDCOM->setRequest($request);
         $_MIDCOM->setContainer($this->container);
-        $_MIDGARD = array(
-            'argv' => array(),
-            'user' => 0,
-            'admin' => false,
-            'root' => false,
-            'auth' => false,
-            'cookieauth' => false,
-            'page' => 0,
-            'debug' => false,
-            'host' => 0,
-            'style' => 0,
-            'author' => 0,
-            'config' => array(
-	            'prefix' => '',
-		        'quota' => false,
-		        'unique_host_name' => 'sf2',
-		        'auth_cookie_id' => 1,
-	        ),
-            'schema' => array(
-	            'types' => array(),
-	        ),
-        );
-        if (!defined('MIDCOM_STATIC_URL')) {
-            define('MIDCOM_STATIC_URL', '/');
-        }
-        $GLOBALS['midcom_config'] = new \midcom_config;
+
         $_MIDCOM->dbclassloader->load_classes('midcom', 'core_classes.inc');
         $_MIDCOM->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
     }
