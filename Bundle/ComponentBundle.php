@@ -66,6 +66,10 @@ class ComponentBundle extends ContainerAware implements BundleInterface
             define('MIDCOM_STATIC_URL', '/');
         }
 
+        if (!defined('MIDCOM_STATIC_ROOT')) {
+            define('MIDCOM_STATIC_ROOT', '/tmp');
+        }
+
         if (!isset($GLOBALS['midcom_config']))
         {
             $GLOBALS['midcom_config'] = new \midcom_config;
