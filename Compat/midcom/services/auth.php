@@ -1,17 +1,38 @@
 <?php
-class midcom_services_auth
-{
-    public $user = null;
+use Symfony\Component\DependencyInjection\ContainerAware;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
 
+class midcom_services_auth extends ContainerAware
+{
     public function require_do($privilege, $object, $message = null)
     {
         if (!$this->can_do($privilege, $object)) {
-            throw new Exception($message);
+            throw new AccessDeniedException($message);
         }
     }
 
-    public function can_do($privilege, $object)
+    public function can_do($privilege, $object = null)
     {
-        return true;
+        try {
+            return $this->container->get('security.context')->isGranted($privilege, $object);
+        } catch (AuthenticationCredentialsNotFoundException $e) {
+            return false;
+        }
+    }
+
+    public function __get($key)
+    {
+        if ($key == 'user') {
+            $token = $this->container->get('security.context')->getToken();
+            if (!$token) {
+                return null;
+            }
+            return $token->getUser();
+        }
+
+        if ($key == 'admin') {
+            return $this->can_do('ROLE_ADMIN');
+        }
     }
 }
