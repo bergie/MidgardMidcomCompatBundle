@@ -1,6 +1,7 @@
 <?php
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class midcom_baseclasses_components_request
 {
@@ -82,7 +83,10 @@ abstract class midcom_baseclasses_components_request
         $controller->_l10n_midcom = $this->_l10n_midcom;
         $controller->_request_data =& $this->_request_data;
 
-        $controller->_on_initialize();
+        if (method_exists($controller, '_on_initialize'))
+        {
+            $controller->_on_initialize();
+        }
 
         $this->_on_can_handle($args, sizeof($args));
 
@@ -91,7 +95,10 @@ abstract class midcom_baseclasses_components_request
         $controllerCanMethod = '_can_handle_' . $request->attributes->get('midcom_action');
         if (method_exists($controller, $controllerCanMethod))
         {
-            $controller->$controllerCanMethod($request->attributes->get('midcom_route_id'), $args, $this->_request_data);
+            if (!$controller->$controllerCanMethod($request->attributes->get('midcom_route_id'), $args, $this->_request_data))
+            {
+                throw new NotFoundHttpException;
+            }
         }
         $this->_on_handle($request->attributes->get('midcom_route_id'), $args);
 
