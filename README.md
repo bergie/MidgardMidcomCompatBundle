@@ -21,6 +21,8 @@ And enable this bundle in your Kernel:
 
     new Midgard\MidcomCompatBundle\MidgardMidcomCompatBundle()
 
+You also need a Midgard2 repository connection, so ensure that you also have the [MidgardConnectionBundle](https://github.com/bergie/MidgardConnectionBundle) installed and configured.
+
 ## Configuration
 
 You need to tell the MidcomCompat autoloader where your MidCOM components are installed.
@@ -42,5 +44,3 @@ You can run individual components by adding them to your route configuration. Fo
         resource: "net.nehmer.static"
         prefix: /midgard
         type: midcom
-
-You also need a Midgard2 repository connection, so ensure that you also have the [MidgardConnectionBundle](https://github.com/bergie/MidgardConnectionBundle) installed and configured.
