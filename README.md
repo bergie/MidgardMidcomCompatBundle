@@ -133,3 +133,9 @@ After the `_can_handle` and `_handler` methods of both the component viewer clas
 ### MidCOM services
 
 Most of the MidCOM service mapping classes are ContainerAware so that they can map their API calls to matching services accessible through the Symfony2 Dependency Injection container.
+
+Current mappings include:
+
+* `auth` maps all privilege checks to the `isGranted` method of the Symfony2 `security.context`. This way any Symfony2 authorization provider can be used
+* `auth` maps user access to the Token API of the Symfony2 `security.context`
+* `session` maps all API calls to Symfony2 sessioning service. If no session is running, one will be automatically started
