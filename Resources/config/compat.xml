@@ -20,6 +20,10 @@
             <argument type="service" id="service_container" />
         </service>
 
+        <service id="midgard.midcomcompat.kernel_listener.exception" class="Midgard\MidcomCompatBundle\EventListener\KernelExceptionListener">
+            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException" />
+        </service>
+
         <service id="midgard.midcomcompat.templating.name_parser" class="Midgard\MidcomCompatBundle\Templating\TemplateNameParser">
             <argument type="service" id="kernel" />
             <argument type="service" id="service_container" />
