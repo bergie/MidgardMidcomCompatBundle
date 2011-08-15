@@ -37,7 +37,7 @@ class KernelViewListener
         $viewer->show($request);
         $content = $request->attributes->get('midcom_content');
 
-        if ($this->container->hasParameter('midgard.midcomcompat.layout')) {
+        if ($this->container->hasParameter('midgard.midcomcompat.layout') && $this->container->getParameter('midgard.midcomcompat.layout')) {
             $content = $this->container->get('templating')->render(
                 $this->container->getParameter('midgard.midcomcompat.layout'),
                 array(
