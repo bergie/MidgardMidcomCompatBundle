@@ -34,6 +34,7 @@ class KernelViewListener
         }
 
         $viewer = $request->attributes->get('midcom_viewer_instance');
+
         ob_start();
         $viewer->show($request);
         $content = ob_get_clean();
