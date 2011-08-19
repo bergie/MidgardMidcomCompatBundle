@@ -6,12 +6,16 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Finder\Finder;
+use Midgard\MidcomCompatBundle\Config\Loader\MidcomArrayLoader;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
+use Symfony\Component\Config\FileLocator;
 
 class ComponentBundle extends ContainerAware implements BundleInterface
 {
     private $name = '';
     private $interface = null;
     private $loaded = array();
+    private $config = null;
 
     public function __construct($name)
     {
@@ -27,7 +31,7 @@ class ComponentBundle extends ContainerAware implements BundleInterface
         }
 
         $this->prepareSuperGlobals();
-        
+
         $this->interface = new $interfaceClass();
 
         foreach ($this->interface->get_autoload_libraries() as $library) {
@@ -106,7 +110,7 @@ class ComponentBundle extends ContainerAware implements BundleInterface
 
     public function getContainerExtension()
     {
-        return new ComponentExtension($this->name);
+        return null;
     }
 
     public function getParent()
@@ -133,8 +137,19 @@ class ComponentBundle extends ContainerAware implements BundleInterface
     {
     }
 
+    public function getConfig(\midgard_topic $topic = null)
+    {
+        if ($this->config) {
+            return $this->config;
+        }
+
+        $loader = new MidcomArrayLoader(new FileLocator($this->getPath() . '/config'));
+        $this->config = new ParameterBag($loader->load('config.inc'));
+        return $this->config;
+    }
+
     public function resolvePermalink(\midgard_topic $topic, $guid)
     {
-        return $this->interface->_on_resolve_permalink($topic, $guid);
+        return $this->interface->_on_resolve_permalink($topic, $guid, $this->getConfig());
     }
 }
