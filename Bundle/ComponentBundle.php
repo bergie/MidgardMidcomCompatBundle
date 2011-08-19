@@ -45,10 +45,6 @@ class ComponentBundle extends ContainerAware implements BundleInterface
 
     private function prepareSuperGlobals()
     {
-        if (!isset($_MIDCOM)) {
-           $_MIDCOM = \midcom::get();
-        }
-
         if (!isset($_MIDGARD)) {
             $_MIDGARD = array(
                 'argv' => array(),
@@ -85,6 +81,15 @@ class ComponentBundle extends ContainerAware implements BundleInterface
         if (!isset($GLOBALS['midcom_config']))
         {
             $GLOBALS['midcom_config'] = new \midcom_config;
+        }
+
+        if (!isset($_MIDCOM)) {
+            $_MIDCOM = \midcom::get();
+            $_MIDCOM->setContainer($this->container);
+
+            // Load main DBA mappings
+            $_MIDCOM->dbclassloader->load_classes('midcom', 'core_classes.inc');
+            $_MIDCOM->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
         }
     }
 

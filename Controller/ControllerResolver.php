@@ -28,15 +28,6 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
         return new ParameterBag($loader->load('config.inc'));
     }
 
-    private function prepareSuperGlobals(Request $request)
-    {
-        $_MIDCOM->setRequest($request);
-        $_MIDCOM->setContainer($this->container);
-
-        $_MIDCOM->dbclassloader->load_classes('midcom', 'core_classes.inc');
-        $_MIDCOM->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
-    }
-
     public function getController(Request $request)
     {
         if (!$request->attributes->has('midcom_component')) {
@@ -44,7 +35,8 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
             return $this->parent->getController($request);
         }
 
-        $this->prepareSuperGlobals($request);
+        // Register the request with MidCOM
+        $_MIDCOM->setRequest($request);
 
         $viewerClass = str_replace('.', '_', $request->attributes->get('midcom_component') . '_viewer');
 

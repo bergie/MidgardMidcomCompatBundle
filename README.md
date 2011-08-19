@@ -71,7 +71,7 @@ Normally this is done in the `registerBundles` method of the kernel itself:
 
     new Midgard\MidcomCompatBundle\Bundle\ComponentBundle('net.nehmer.blog'),
 
-It is also possible to load bundles at runtime using MidCOM's API methods:
+It is also possible to load bundles at runtime using MidCOM's API methods, though then the Symfony2 application kernel will not be aware of them:
 
     $_MIDCOM->load_library('midcom.helper.datamanager2');
     $_MIDCOM->componentloader->load('net.nemein.wiki');

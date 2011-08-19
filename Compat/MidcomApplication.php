@@ -5,27 +5,50 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Midgard\MidcomCompatBundle\DependencyInjection\RequestAware;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Midgard\MidcomCompatBundle\Bundle\ComponentBundle;
 
 class MidcomApplication extends RequestAware
 {
+    private $services = array();
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        parent::setContainer($container);
+
+        foreach ($this->services as $service) {
+            if ($service instanceof ContainerAware) {
+                $service->setContainer($container);
+            }
+        }
+    }
+
     public function setRequest(Request $request)
     {
         parent::setRequest($request);
+
+        foreach ($this->services as $service) {
+            if ($service instanceof RequestAware) {
+                $service->setRequest($request);
+            }
+        }
+
         $this->prepare_context_data();
     }
 
     private function load_service($service)
     {
+        if (isset($this->services[$service])) {
+            return;
+        }
         $serviceImplementation = "midcom_services_{$service}";
-        $this->$service = new $serviceImplementation();
-
-        if ($this->$service instanceof RequestAware) {
-            $this->$service->setRequest($this->request);
+        $this->services[$service] = new $serviceImplementation();
+        if ($this->services[$service] instanceof RequestAware) {
+            $this->services[$service]->setRequest($this->request);
         }
 
-        if ($this->$service instanceof ContainerAware) {
-            $this->$service->setContainer($this->container);
+        if ($this->services[$service] instanceof ContainerAware) {
+            $this->services[$service]->setContainer($this->container);
         }
     }
 
@@ -37,6 +60,9 @@ class MidcomApplication extends RequestAware
     public function __get($key)
     {
         $this->load_service($key);
+        if (isset($this->services[$key])) {
+            return $this->services[$key];
+        }
         return $this->$key;
     }
 
