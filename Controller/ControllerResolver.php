@@ -26,6 +26,10 @@ class ControllerResolver extends ContainerAware implements ControllerResolverInt
         // Register the request with MidCOM
         $_MIDCOM->setRequest($request);
 
+        // TODO: Get viewer instance from request params set by Router Loader
+        // TODO: Call can_handle from both viewer and handler, return 404 if false
+        // TODO: Call handle from viewer here, then return handler
+
         $viewerClass = str_replace('.', '_', $request->attributes->get('midcom_component') . '_viewer');
 
         $component = $this->container->get('kernel')->getBundle($request->attributes->get('midcom_component'));

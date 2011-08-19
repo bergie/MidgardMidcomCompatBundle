@@ -39,6 +39,7 @@ class MidcomRouterLoader extends Loader
 
     public function load($resource, $type = null)
     {
+        // TODO: Load and initialize component viewer here, set to request
         $locator = new FileLocator("{$this->rootDir}/" . str_replace('.', '/', $resource) . '/config');
         $loader = new MidcomArrayLoader($locator);
         $routes = $loader->load('routes.inc');
