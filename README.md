@@ -40,6 +40,11 @@ As most components require the old `$_MIDCOM` superglobal to be available, you a
 
     midgard.superglobals_compat=On
 
+To enable MidCOM's internal routes, you should also include the following to your routing configuration:
+
+    _midcom:
+        resource: "@MidgardMidcomCompatBundle/Resources/config/routing.yml"
+
 ## Running components in your Symfony2 application
 
 You can run individual components by adding them to your route configuration. For example:

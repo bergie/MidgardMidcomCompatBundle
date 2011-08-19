@@ -1,0 +1,3 @@
+_midcom_permalink:
+    pattern: /midcom-permalink-{guid}
+    defaults: { _controller: "MidcomCompatBundle:Permalink:redirect" }
