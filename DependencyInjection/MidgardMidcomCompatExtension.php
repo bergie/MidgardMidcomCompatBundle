@@ -16,6 +16,10 @@ class MidgardMidcomCompatExtension extends Extension
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('compat.xml');
 
+        if (!isset($configs[0]) || !isset($configs[0]['root'])) {
+            throw new \InvalidArgumentException('No midgard.midcomcompat.root defined');
+        }
+
         $rootDir = realpath($configs[0]['root']);
         if (!is_dir($rootDir)) {
             throw new \InvalidArgumentException(sprintf('MidCOM component directory "%s" not found, check your configuration.', $rootDir));

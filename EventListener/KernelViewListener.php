@@ -39,7 +39,7 @@ class KernelViewListener
         $viewer->show($request);
         $content = ob_get_clean();
 
-        if ($this->container->hasParameter('midgard.midcomcompat.layout') && !$request->attributes->has('midcom_skip_style')) {
+        if ($this->container->hasParameter('midgard.midcomcompat.layout') &&  $this->container->getParameter('midgard.midcomcompat.layout') && !$request->attributes->has('midcom_skip_style')) {
             $content = $this->container->get('templating')->render(
                 $this->container->getParameter('midgard.midcomcompat.layout'),
                 array(
