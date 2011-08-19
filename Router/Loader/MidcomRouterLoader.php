@@ -78,7 +78,7 @@ class MidcomRouterLoader extends Loader
 
             $path = str_replace('//', '/', $path);
 
-            if (substr($path, -1) != '/') {
+            if (substr($path, -1) != '/' && strpos($path, '.') === false) {
                 $path = "{$path}/";
             }
 
