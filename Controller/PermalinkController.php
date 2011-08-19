@@ -10,7 +10,6 @@ class PermalinkController extends Controller
     {
         if (class_exists('midcom')) {
             $uri = \midcom::get()->permalinks->resolve_permalink($guid);
-            var_dump($uri);
             if ($uri) {
                 return $this->redirect($uri);
             }
