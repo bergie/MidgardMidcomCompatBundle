@@ -40,6 +40,15 @@ class MidcomApplication extends RequestAware
         return $this->$key;
     }
 
+    public function __set($key, $value)
+    {
+        if ($key == 'skip_page_style') {
+            $this->request->attributes->set('midcom_skip_style', $value);
+        }
+
+        $this->$key = $value;
+    }
+
     private function prepare_context_data()
     {
         $context = array();

@@ -34,10 +34,15 @@ class KernelViewListener
         }
 
         $viewer = $request->attributes->get('midcom_viewer_instance');
+        ob_start();
         $viewer->show($request);
+        $viewerContent = ob_get_clean();
         $content = $request->attributes->get('midcom_content');
+        if (!$content) {
+            $content = $viewerContent;
+        }
 
-        if ($this->container->hasParameter('midgard.midcomcompat.layout')) {
+        if ($this->container->hasParameter('midgard.midcomcompat.layout') && !$request->attributes->has('midcom_skip_style')) {
             $content = $this->container->get('templating')->render(
                 $this->container->getParameter('midgard.midcomcompat.layout'),
                 array(
@@ -45,7 +50,6 @@ class KernelViewListener
                 )
             );
         }
-
 
         $response = new Response($content);
 
