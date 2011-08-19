@@ -6,8 +6,6 @@ use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-require __DIR__ . '/../Compat/debug.php';
-
 class ControllerResolver extends ContainerAware implements ControllerResolverInterface
 {
     private $parent;

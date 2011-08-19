@@ -10,6 +10,8 @@ use Midgard\MidcomCompatBundle\Config\Loader\MidcomArrayLoader;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 use Symfony\Component\Config\FileLocator;
 
+require __DIR__ . '/../Compat/debug.php';
+
 class ComponentBundle extends ContainerAware implements BundleInterface
 {
     private $name = '';
