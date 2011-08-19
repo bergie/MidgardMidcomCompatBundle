@@ -72,10 +72,15 @@ class MidcomRouterLoader extends Loader
                 while ($route['variable_args']) {
                     $path .= '/{midcom_arg_' . $i . '}';
                     $route['variable_args']--;
+                    $i++;
                 }
             }
 
             $path = str_replace('//', '/', $path);
+
+            if (substr($path, -1) != '/') {
+                $path = "{$path}/";
+            }
 
             $reqs = array();
             $options = array();
