@@ -31,9 +31,7 @@ class MidcomApplication extends RequestAware
 
     public function load_library($library)
     {
-        $library = new ComponentBundle($library); 
-        $library->setContainer($this->container);
-        $library->boot();
+        return $this->componentloader->load_graceful($library);
     }
 
     public function __get($key)

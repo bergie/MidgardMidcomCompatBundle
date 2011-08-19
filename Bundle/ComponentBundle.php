@@ -11,6 +11,7 @@ class ComponentBundle extends ContainerAware implements BundleInterface
 {
     private $name = '';
     private $interface = null;
+    private $loaded = array();
 
     public function __construct($name)
     {
@@ -31,7 +32,12 @@ class ComponentBundle extends ContainerAware implements BundleInterface
 
         foreach ($this->interface->get_autoload_files() as $file)
         {
-            require($this->getPath() . "/{$file}");
+            $path = $this->getPath() . "/{$file}";
+            if (in_array($path, $this->loaded)) {
+                continue;
+            }
+            require($path);
+            $this->loaded[] = $path;
         }
 
         $this->interface->_on_initialize();
