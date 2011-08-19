@@ -26,6 +26,7 @@
         </service>
 
         <service id="templating.engine.midcom" class="Midgard\MidcomCompatBundle\Templating\MidcomEngine">
+            <argument type="service" id="service_container" />
             <argument type="service" id="templating.locator" />
             <argument type="service" id="midgard.midcomcompat.templating.name_parser" />
         </service>

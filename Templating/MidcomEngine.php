@@ -4,6 +4,7 @@ namespace Midgard\MidcomCompatBundle\Templating;
 use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\Config\FileLocatorInterface;
 use Symfony\Component\Templating\TemplateNameParser;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class MidcomEngine implements EngineInterface
 {
@@ -18,9 +19,11 @@ class MidcomEngine implements EngineInterface
        'f' => 'nl2br',
        's' => 'unmodified',
     );
+    private $container;
 
-    public function __construct(FileLocatorInterface $locator, TemplateNameParser $parser)
+    public function __construct(ContainerInterface $container, FileLocatorInterface $locator, TemplateNameParser $parser)
     {
+        $this->container = $container;
         $this->locator = $locator;
         $this->parser = $parser;
     }
@@ -85,7 +88,15 @@ class MidcomEngine implements EngineInterface
 
     public function includeElement($name)
     {
-        return $name;
+        if (strpos($name, ':') === false) {
+            // MidCOM element, expand
+            $name == sprintf('%s.%s.%s',
+                $name,
+                'html',
+                'midcom'
+            ); 
+        }
+        return $this->container->get('templating')->render($name, array());
     }
 
     public function exists($name)
