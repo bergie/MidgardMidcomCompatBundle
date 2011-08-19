@@ -30,8 +30,11 @@ class ComponentBundle extends ContainerAware implements BundleInterface
         
         $this->interface = new $interfaceClass();
 
-        foreach ($this->interface->get_autoload_files() as $file)
-        {
+        foreach ($this->interface->get_autoload_libraries() as $library) {
+            $_MIDCOM->componentloader->load($library);
+        }
+
+        foreach ($this->interface->get_autoload_files() as $file) {
             $path = $this->getPath() . "/{$file}";
             if (in_array($path, $this->loaded)) {
                 continue;
