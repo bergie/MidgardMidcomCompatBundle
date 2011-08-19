@@ -53,6 +53,14 @@ class KernelViewListener
 
         $response = new Response($content);
 
+        if ($request->attributes->has('midcom_headers')) {
+            $headers = $request->attributes->get('midcom_headers');
+            foreach ($headers as $header => $value) {
+                $response->headers->set($header, $value);
+            }
+        }
+
+        // Remove MidCOM data from request to ease debugging
         $request->attributes->set('midcom_request_data', null);
 
         $event->setResponse($response);

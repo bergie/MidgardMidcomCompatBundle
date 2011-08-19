@@ -116,8 +116,15 @@ class MidcomApplication extends RequestAware
         $this->request->attributes->set('midcom_response', new RedirectResponse($url));
     }
 
-    public function header()
+    public function header($header, $responseCode = null)
     {
+        $headerParts = explode(': ', $header);
+        $headers = array();
+        if ($this->request->attributes->has('midcom_headers')) {
+            $headers = $this->request->attributes->get('midcom_headers');
+        }
+        $headers[$headerParts[0]] = $headerParts[1];
+        $this->request->attributes->set('midcom_headers', $headers);
     }
 
     public function set_pagetitle($title)
