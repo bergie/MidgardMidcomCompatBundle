@@ -57,6 +57,11 @@ class MidcomApplication extends RequestAware
         return $this->componentloader->load_graceful($library);
     }
 
+    public function get_service($service)
+    {
+        return $this->$service;
+    }
+
     public function __get($key)
     {
         $this->load_service($key);
