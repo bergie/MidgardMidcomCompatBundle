@@ -41,6 +41,9 @@ class midcom_services_auth extends ContainerAware
 
     public function can_do($privilege, $object = null)
     {
+        if ($this->container->get('security.context')->isGranted('ROLE_ADMIN')) {
+            return true;
+        }
         $privilege = $this->map_privilege($privilege);
         try {
             return $this->container->get('security.context')->isGranted($privilege, $object);
