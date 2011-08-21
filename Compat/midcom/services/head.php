@@ -13,10 +13,13 @@ class midcom_services_head
     {
     }
 
+    public function add_jscript()
+    {
+    }
+
     public function enable_jquery($version = null)
     {
-        if (!defined('MIDCOM_JQUERY_UI_URL'))
-        {
+        if (!defined('MIDCOM_JQUERY_UI_URL')) {
             define('MIDCOM_JQUERY_UI_URL', MIDCOM_STATIC_URL . "/jQuery/jquery-ui-{$GLOBALS['midcom_config']['jquery_ui_version']}");
         }
     }

@@ -29,4 +29,8 @@ abstract class midcom_baseclasses_components_purecode
         }
         return $this->$key;
     }
+
+    public function add_stylesheet($url)
+    {
+    }
 }

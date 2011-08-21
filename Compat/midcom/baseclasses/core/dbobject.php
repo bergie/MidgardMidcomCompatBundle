@@ -16,8 +16,18 @@ class midcom_baseclasses_core_dbobject
         return $object->__object->parameter($domain, $name);
     }
 
+    public static function set_parameter($object, $domain, $name, $value)
+    {
+        return $object->__object->parameter($domain, $name, $value);
+    }
+
     public static function list_parameters($object, $domain)
     {
         return $object->__object->list_parameters($domain);
+    }
+
+    public static function delete($object)
+    {
+        return $object->__exec_delete();
     }
 }

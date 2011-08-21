@@ -86,6 +86,13 @@ class MidcomApplication extends RequestAware
         $this->request->attributes->set('midcom_context', $context);
     }
 
+    public function set_context_data($param, $value)
+    {
+        $context = $this->request->attributes->get('midcom_context');
+        $context[$param] = $value;
+        $this->request->attributes->set('midcom_context', $context);
+    }
+
     public function get_context_data($param1, $param2 = null)
     {
         $context = $this->request->attributes->get('midcom_context');
@@ -114,6 +121,16 @@ class MidcomApplication extends RequestAware
     public function add_jsfile($url, $prepend = false)
     {
         $this->head->add_jsfile($url, $prepend);
+    }
+
+    public function add_jscript()
+    {
+        $this->head->add_jscript();
+    }
+
+    public function enable_jquery()
+    {
+        $this->head->enable_jquery();
     }
 
     public function relocate($url)

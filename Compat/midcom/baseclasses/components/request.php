@@ -25,6 +25,7 @@ abstract class midcom_baseclasses_components_request
             $this->_topic = $this->prepare_topic($request);
         }
         $this->_request_data['topic'] = $this->_topic;
+        $_MIDCOM->set_context_data(MIDCOM_CONTEXT_CONTENTTOPIC, $this->_topic);
 
         $this->_node_toolbar = new midcom_helper_toolbar();
         $this->_view_toolbar = new midcom_helper_toolbar();

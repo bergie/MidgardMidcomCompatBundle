@@ -39,4 +39,33 @@ class midcom_services_dbfactory
         $object = new $classname($identifier);
         return $object;
     }
+
+    public function is_a($object, $class)
+    {
+        if ($object instanceof $class) {
+            return true;
+        }
+
+        if (   isset($object->__object)
+            && is_object($object->__object)
+            && is_a($object->__object, $class))
+        {
+            // Decorator whose MgdSchema object matches
+            return true;
+        }
+
+        if (   isset($object->__mgdschema_class_name__)
+            && $object->__mgdschema_class_name__ == $class)
+        {
+            // Decorator without object instantiated, check class match
+            return true;
+        }
+
+        return false;
+    }
+
+    public function property_exists($object, $property)
+    {
+        return property_exists($object, $property);
+    }
 }
