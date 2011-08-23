@@ -27,8 +27,8 @@ abstract class midcom_baseclasses_components_request
         $this->_request_data['topic'] = $this->_topic;
         $_MIDCOM->set_context_data(MIDCOM_CONTEXT_CONTENTTOPIC, $this->_topic);
 
-        $this->_node_toolbar = new midcom_helper_toolbar();
-        $this->_view_toolbar = new midcom_helper_toolbar();
+        $this->_node_toolbar = $_MIDCOM->toolbars->get_node_toolbar();
+        $this->_view_toolbar = $_MIDCOM->toolbars->get_view_toolbar();
         $this->_l10n = $_MIDCOM->i18n->get_l10n();
         $this->_l10n_midcom = $_MIDCOM->i18n->get_l10n();
         $this->_request_data['l10n'] = $this->_l10n;
