@@ -21,6 +21,15 @@ class midcom_services_componentloader extends ContainerAware
         return true;
     }
 
+    public function is_loaded($component)
+    {
+        if (in_array($component, $this->loadedBundles))
+        {
+            return true;
+        }
+        return false;
+    }
+
     public function path_to_prefix($path)
     {
         return strtr($path, ".", "_");
