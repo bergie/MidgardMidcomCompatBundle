@@ -39,6 +39,21 @@ class midcom_services_auth extends ContainerAware
         throw new AccessDeniedException($message);
     }
 
+    public function require_user_do($privilege, $message = null, $class = null)
+    {
+        if ($this->can_user_do($privilege, null, $class))
+        {
+            return;
+        }
+
+        if (!$message)
+        {
+            $message = $this->container->get('translator')->trans('access denied: privileges required', array(), 'midcom');
+        }
+
+        throw new AccessDeniedException($message);
+    }
+
     public function can_do($privilege, $object = null)
     {
         if ($this->container->get('security.context')->isGranted('ROLE_ADMIN')) {
