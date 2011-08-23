@@ -81,7 +81,7 @@ class ComponentBundle extends ContainerAware implements BundleInterface
         }
 
         if (!defined('MIDCOM_STATIC_URL')) {
-            define('MIDCOM_STATIC_URL', '/');
+            define('MIDCOM_STATIC_URL', '/midcom-static');
         }
 
         if (!defined('MIDCOM_STATIC_ROOT')) {
