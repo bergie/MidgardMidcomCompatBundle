@@ -15,4 +15,9 @@ class midcom_services_i18n
     {
         return 'en';
     }
+
+    public function list_languages()
+    {
+        return array();
+    }
 }

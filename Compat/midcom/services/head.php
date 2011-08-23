@@ -83,6 +83,8 @@ class midcom_services_head extends RequestAware
         }
 
         $this->add_jsfile(MIDCOM_STATIC_URL . "/jQuery/jquery-{$version}.js");
+        $this->add_jscript('var MIDCOM_STATIC_URL="' . MIDCOM_STATIC_URL . "\";\n");
+        $this->add_jscript("var MIDCOM_PAGE_PREFIX=\"/\";\n");
     }
 
     public function add_jquery_ui_theme(array $components = array())
@@ -108,6 +110,15 @@ class midcom_services_head extends RequestAware
             foreach ($jsfiles as $jsfile) {
                 echo "<script type=\"text/javascript\" src=\"{$jsfile}\"></script>\n";
             }
+        }
+
+        if ($this->request->attributes->has('midcom_head_jscripts')) {
+            echo "<script type=\"text/javascript\">\n";
+            $jscripts = $this->request->attributes->get('midcom_head_jscripts');
+            foreach ($jscripts as $jscript) {
+                echo $jscript;
+            }
+            echo "\n</script>\n";
         }
 
         if ($this->request->attributes->has('midcom_head_statescripts')) {
