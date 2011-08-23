@@ -35,6 +35,7 @@ class ComponentBundle extends ContainerAware implements BundleInterface
         $this->prepareSuperGlobals();
 
         $this->interface = new $interfaceClass();
+        $this->interface->_component = $this->name;
 
         foreach ($this->interface->get_autoload_libraries() as $library) {
             $_MIDCOM->componentloader->load($library);
