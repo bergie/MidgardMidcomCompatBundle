@@ -6,6 +6,8 @@ use Midgard\ConnectionBundle\Security\User\User;
 
 class midcom_services_auth extends ContainerAware
 {
+    private $sudo_mode = 0;
+
     private function map_privilege($privilege)
     {
         switch ($privilege) {
@@ -57,6 +59,10 @@ class midcom_services_auth extends ContainerAware
 
     public function can_do($privilege, $object = null)
     {
+        if ($this->sudo_mode > 0) {
+            return true;
+        }
+
         try {
             if ($this->container->get('security.context')->isGranted('ROLE_ADMIN')) {
                 return true;
@@ -107,11 +113,13 @@ class midcom_services_auth extends ContainerAware
 
     public function request_sudo($component = null)
     {
+        $this->sudo_mode++;
         return true;
     }
 
     public function drop_sudo()
     {
+        $this->sudo_mode--;
     }
 
     private function get_midgard_user()
