@@ -29,8 +29,8 @@ abstract class midcom_baseclasses_components_request
 
         $this->_node_toolbar = $_MIDCOM->toolbars->get_node_toolbar();
         $this->_view_toolbar = $_MIDCOM->toolbars->get_view_toolbar();
-        $this->_l10n = $_MIDCOM->i18n->get_l10n();
-        $this->_l10n_midcom = $_MIDCOM->i18n->get_l10n();
+        $this->_l10n = $_MIDCOM->i18n->get_l10n($request->attributes->get('midcom_component'));
+        $this->_l10n_midcom = $_MIDCOM->i18n->get_l10n('midcom');
         $this->_request_data['l10n'] = $this->_l10n;
         $this->_request_data['l10n_midcom'] = $this->_l10n_midcom;
 

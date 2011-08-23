@@ -1,14 +1,16 @@
 <?php
-class midcom_services_i18n
+use Symfony\Component\DependencyInjection\ContainerAware;
+
+class midcom_services_i18n extends ContainerAware
 {
     public function get_l10n($component = 'midcom', $database = 'default')
     {
-        return new midcom_helper_l10n();
+        return new midcom_helper_l10n($this->container->get('translator'), $component);
     }
 
     public function get_string($string, $component, $database = null)
     {
-        return "!!{$string}";
+        return $this->container->get('translator')->trans($string, array(), $component);
     }
 
     public function get_current_language()
