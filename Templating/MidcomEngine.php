@@ -20,6 +20,7 @@ class MidcomEngine implements EngineInterface
        's' => 'unmodified',
     );
     private $container;
+    private $bundleContext = '';
 
     public function __construct(ContainerInterface $container, FileLocatorInterface $locator, TemplateNameParser $parser)
     {
@@ -31,6 +32,9 @@ class MidcomEngine implements EngineInterface
     public function render($name, array $parameters = array())
     {
         $data =& $parameters;
+
+        $this->bundleContext = $this->parser->parse($name)->get('bundle');
+
         $template = file_get_contents($this->findTemplate($name));
         ob_start();
         eval('?>' . $this->preparse($template));
@@ -88,14 +92,30 @@ class MidcomEngine implements EngineInterface
 
     public function includeElement($name)
     {
-        if (strpos($name, ':') === false) {
+        if (is_array($name)) {
+            $name = $name[1];
+        }
+
+        if ($name == 'title') {
+            return 'MidCOM';
+        }
+
+        if (strpos(':', $name) === false) {
             // MidCOM element, expand
-            $name == sprintf('%s.%s.%s',
+            $name = sprintf('%s::%s.%s.%s',
+                $this->bundleContext,
                 $name,
                 'html',
                 'midcom'
-            ); 
+            );
+
+            if (substr($name, 0, 1) == '/') {
+                $parts = explode(':', $name);
+                $type = explode('.', $parts[2]);
+                $name = new TemplateReference(realpath($parts[0]), $parts[1], $type[0], $type[1], $type[2]);
+            }
         }
+
         return $this->container->get('templating')->render($name, array());
     }
 

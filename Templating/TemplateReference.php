@@ -7,6 +7,12 @@ class TemplateReference extends BaseTemplateReference
 {
     public function getPath()
     {
-        return sprintf('@%s/style/%s.php', $this->get('bundle'), $this->get('name'));
+        $path = sprintf('%s/style/%s.php', $this->get('bundle'), $this->get('name'));
+ 
+        if (substr($path, 0, 1) == '/') {
+            return $path;
+        }
+
+        return '@' . $path;
     }
 }
