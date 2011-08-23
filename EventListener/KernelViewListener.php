@@ -64,6 +64,7 @@ class KernelViewListener
 
         // Remove MidCOM data from request to ease debugging
         $request->attributes->set('midcom_request_data', null);
+        $request->attributes->set('midcom_context', null);
 
         $event->setResponse($response);
     }

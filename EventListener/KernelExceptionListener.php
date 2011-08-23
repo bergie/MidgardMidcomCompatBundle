@@ -13,5 +13,6 @@ class KernelExceptionListener
         }
 
         $request->attributes->set('midcom_request_data', null);
+        $request->attributes->set('midcom_context', null);
     }
 }
