@@ -133,6 +133,11 @@ class MidcomApplication extends RequestAware
         $this->head->add_jscript($script);
     }
 
+    public function add_jquery_state_script($script, $state = 'document.ready')
+    {
+        $this->head->add_jquery_state_script($script, $state);
+    }
+
     public function enable_jquery()
     {
         $this->head->enable_jquery();

@@ -52,6 +52,21 @@ class midcom_services_head extends RequestAware
         $this->appendToRequest('jscripts', $script);
     }
 
+    public function add_jquery_state_script($script, $state = 'document.ready')
+    {
+        $values = array();
+        if ($this->request->attributes->has('midcom_head_statescripts')) {
+            $values = $this->request->attributes->get('midcom_head_statescripts');
+        }
+
+        if (!isset($values[$state])) {
+            $values[$state] = '';
+        }
+
+        $values[$state] .= "\n{$script}\n";
+        $this->request->attributes->set('midcom_head_statescripts', $values);
+    }
+
     public function add_meta_head(array $attributes = null)
     {
         $this->appendToRequest('meta', $attributes);
@@ -59,9 +74,15 @@ class midcom_services_head extends RequestAware
 
     public function enable_jquery($version = null)
     {
+        if (!$version) {
+            $version = $GLOBALS['midcom_config']['jquery_version'];
+        }
+
         if (!defined('MIDCOM_JQUERY_UI_URL')) {
             define('MIDCOM_JQUERY_UI_URL', MIDCOM_STATIC_URL . "/jQuery/jquery-ui-{$GLOBALS['midcom_config']['jquery_ui_version']}");
         }
+
+        $this->add_jsfile(MIDCOM_STATIC_URL . "/jQuery/jquery-{$version}.js");
     }
 
     public function add_jquery_ui_theme(array $components = array())
@@ -80,6 +101,23 @@ class midcom_services_head extends RequestAware
                 }
                 echo "<link{$output}/>\n";
             }
+        }
+
+        if ($this->request->attributes->has('midcom_head_jsfiles')) {
+            $jsfiles = $this->request->attributes->get('midcom_head_jsfiles');
+            foreach ($jsfiles as $jsfile) {
+                echo "<script type=\"text/javascript\" src=\"{$jsfile}\"></script>\n";
+            }
+        }
+
+        if ($this->request->attributes->has('midcom_head_statescripts')) {
+            echo "<script type=\"text/javascript\">";
+            $statescripts = $this->request->attributes->get('midcom_head_statescripts');
+            foreach ($statescripts as $state => $script) {
+                $stateParts = explode('.', $state);
+                echo "\njQuery({$stateParts[0]}).{$stateParts[1]}(function() { {$script} });\n";
+            }
+            echo "</script>\n";
         }
     }
 

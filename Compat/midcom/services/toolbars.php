@@ -21,18 +21,17 @@ class midcom_services_toolbars extends ContainerAware
             return;
         }
 
-        $_MIDCOM->enable_jquery();
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.timers.src.js');
-        $_MIDCOM->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/jquery.ui.core.min.js');
-        $_MIDCOM->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/jquery.ui.widget.min.js');
-        $_MIDCOM->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/jquery.ui.mouse.min.js');
-        $_MIDCOM->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/jquery.ui.draggable.min.js');
-        $_MIDCOM->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.toolbars/jquery.midcom_services_toolbars.js');
-        $_MIDCOM->add_stylesheet(MIDCOM_STATIC_URL . '/midcom.services.toolbars/fancy.css', 'screen');
+        $_MIDCOM->head->enable_jquery();
+        $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . '/jQuery/jquery.timers.src.js');
+        $_MIDCOM->head->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/jquery.ui.core.min.js');
+        $_MIDCOM->head->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/jquery.ui.widget.min.js');
+        $_MIDCOM->head->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/jquery.ui.mouse.min.js');
+        $_MIDCOM->head->add_jsfile(MIDCOM_JQUERY_UI_URL . '/ui/jquery.ui.draggable.min.js');
+        $_MIDCOM->head->add_jsfile(MIDCOM_STATIC_URL . '/midcom.services.toolbars/jquery.midcom_services_toolbars.js');
+        $_MIDCOM->head->add_stylesheet(MIDCOM_STATIC_URL . '/midcom.services.toolbars/fancy.css', 'screen');
 
         $script = "jQuery('body div.midcom_services_toolbars_fancy').midcom_services_toolbar({});";
-
-        $_MIDCOM->add_jquery_state_script($script);
+        $_MIDCOM->head->add_jquery_state_script($script);
     }
 
     public function get_host_toolbar()
