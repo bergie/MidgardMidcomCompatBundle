@@ -1,10 +1,12 @@
 <?php
-use Symfony\Component\DependencyInjection\ContainerAware;
+use Midgard\MidcomCompatBundle\DependencyInjection\RequestAware;
+use Symfony\Component\HttpFoundation\Request;
 
-class midcom_services_toolbars extends ContainerAware
+class midcom_services_toolbars extends RequestAware
 {
-    public function __construct()
+    public function setRequest(Request $request)
     {
+        parent::setRequest($request);
         $this->initialize();
     }
 
