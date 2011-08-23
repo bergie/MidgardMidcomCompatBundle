@@ -19,6 +19,10 @@ abstract class midcom_baseclasses_components_handler
     {
     }
 
+    public function set_active_leaf($leaf_id)
+    {
+    }
+
     public function __get($field)
     {
         if (array_key_exists($field, $this->_services))
