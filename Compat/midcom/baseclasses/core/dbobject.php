@@ -11,6 +11,12 @@ class midcom_baseclasses_core_dbobject
         return $object->__exec_create();
     }
 
+    public static function get_by_path($object, $path)
+    {
+        $object->__exec_get_by_path((string) $path);
+        return true;
+    }
+
     public static function get_parameter($object, $domain, $name)
     {
         return $object->__object->parameter($domain, $name);
