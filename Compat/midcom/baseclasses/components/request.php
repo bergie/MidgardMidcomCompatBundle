@@ -107,7 +107,7 @@ abstract class midcom_baseclasses_components_request
         $controller->$controllerMethod($request->attributes->get('midcom_route_id'), $args, $this->_request_data);
 
         $request->attributes->set('midcom_controller_instance', $controller);
-        $request->attributes->set('midcom_request_data', &$this->_request_data);
+        $request->attributes->set('midcom_request_data', $this->_request_data);
     }
 
     public function _on_handle($handler_id, $args)
@@ -122,9 +122,9 @@ abstract class midcom_baseclasses_components_request
 
         $_MIDCOM->style->request_data =& $this->_request_data;
 
-        $controller->$controllerMethod($request->attributes->get('midcom_route_id'), &$this->_request_data);
+        $controller->$controllerMethod($request->attributes->get('midcom_route_id'), $this->_request_data);
 
-        $request->attributes->set('midcom_request_data', &$this->_request_data);
+        $request->attributes->set('midcom_request_data', $this->_request_data);
     }
 
     public function _on_show($handler_id)
