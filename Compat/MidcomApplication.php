@@ -27,6 +27,11 @@ class MidcomApplication extends RequestAware
     {
         parent::setRequest($request);
 
+        if (!defined('OPENPSA2_PREFIX'))
+        {
+            define('OPENPSA2_PREFIX', $request->getBaseUrl() . '/');
+        }
+
         foreach ($this->services as $service) {
             if ($service instanceof RequestAware) {
                 $service->setRequest($request);
