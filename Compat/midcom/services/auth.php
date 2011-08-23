@@ -89,6 +89,15 @@ class midcom_services_auth extends ContainerAware
     {
     }
 
+    public function request_sudo($component = null)
+    {
+        return true;
+    }
+
+    public function drop_sudo()
+    {
+    }
+
     public function __get($key)
     {
         if ($key == 'user') {
