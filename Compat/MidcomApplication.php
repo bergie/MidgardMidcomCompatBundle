@@ -138,6 +138,16 @@ class MidcomApplication extends RequestAware
         $this->head->enable_jquery();
     }
 
+    public function print_head_elements()
+    {
+        return $this->head->print_head_elements();
+    }
+
+    public function print_jsonload()
+    {
+        return $this->head->print_jsonload();
+    }
+
     public function relocate($url)
     {
         $this->request->attributes->set('midcom_response', new RedirectResponse($url));
@@ -169,6 +179,11 @@ class MidcomApplication extends RequestAware
     }
 
     public function get_host_name()
+    {
+        return '';
+    }
+
+    public function get_page_prefix()
     {
         return '';
     }

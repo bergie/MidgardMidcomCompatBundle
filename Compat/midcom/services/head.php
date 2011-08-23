@@ -28,4 +28,12 @@ class midcom_services_head
     {
 
     }
+
+    public function print_head_elements()
+    {
+    }
+
+    public function print_jsonload()
+    {
+    }
 }
