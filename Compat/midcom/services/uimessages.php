@@ -43,6 +43,7 @@ class midcom_services_uimessages extends RequestAware
             $message = str_replace('"', "'", $message);
             $title = str_replace('"', "'", $title);
             echo "    jQuery('#midcom_services_uimessages_wrapper').midcom_services_uimessage({title: \"{$title}\", message: \"{$message}\", type: \"info\"});\n";
+            $this->container->get('session')->removeFlash($title);
         }
         echo "});\n</script>\n";
     }
