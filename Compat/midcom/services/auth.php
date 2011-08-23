@@ -2,6 +2,7 @@
 use Symfony\Component\DependencyInjection\ContainerAware;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationCredentialsNotFoundException;
+use Midgard\ConnectionBundle\Security\User\User;
 
 class midcom_services_auth extends ContainerAware
 {
@@ -56,11 +57,11 @@ class midcom_services_auth extends ContainerAware
 
     public function can_do($privilege, $object = null)
     {
-        if ($this->container->get('security.context')->isGranted('ROLE_ADMIN')) {
-            return true;
-        }
-        $privilege = $this->map_privilege($privilege);
         try {
+            if ($this->container->get('security.context')->isGranted('ROLE_ADMIN')) {
+                return true;
+            }
+            $privilege = $this->map_privilege($privilege);
             return $this->container->get('security.context')->isGranted($privilege, $object);
         } catch (AuthenticationCredentialsNotFoundException $e) {
             return false;
@@ -113,14 +114,30 @@ class midcom_services_auth extends ContainerAware
     {
     }
 
+    private function get_midgard_user()
+    {
+        $token = $this->container->get('security.context')->getToken();
+        if (!$token) {
+            return null;
+        }
+        return $this->get_person_for_user($token->getUser());
+    }
+
+    private function get_person_for_user($user)
+    {
+        if (!$user instanceof User) {
+            // Non-Midgard user
+            return null;
+        }
+
+        $person = $user->getMidgardUser()->get_person();
+        return new midcom_db_person($person);
+    }
+
     public function __get($key)
     {
         if ($key == 'user') {
-            $token = $this->container->get('security.context')->getToken();
-            if (!$token) {
-                return null;
-            }
-            return $token->getUser();
+            return $this->get_midgard_user();
         }
 
         if ($key == 'admin') {
