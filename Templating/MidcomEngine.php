@@ -21,6 +21,7 @@ class MidcomEngine implements EngineInterface
     );
     private $container;
     private $bundleContext = '';
+    private $content = '';
 
     public function __construct(ContainerInterface $container, FileLocatorInterface $locator, TemplateNameParser $parser)
     {
@@ -34,6 +35,10 @@ class MidcomEngine implements EngineInterface
         $data =& $parameters;
 
         $this->bundleContext = $this->parser->parse($name)->get('bundle');
+
+        if (isset($parameters['content'])) {
+            $this->content = $parameters['content'];
+        }
 
         $template = file_get_contents($this->findTemplate($name));
         ob_start();
@@ -98,6 +103,10 @@ class MidcomEngine implements EngineInterface
 
         if ($name == 'title') {
             return 'MidCOM';
+        }
+
+        if ($name == 'content') {
+            return $this->content;
         }
 
         if (strpos(':', $name) === false) {
