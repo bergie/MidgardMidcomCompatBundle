@@ -128,9 +128,9 @@ class MidcomApplication extends RequestAware
         $this->head->add_jsfile($url, $prepend);
     }
 
-    public function add_jscript()
+    public function add_jscript($script)
     {
-        $this->head->add_jscript();
+        $this->head->add_jscript($script);
     }
 
     public function enable_jquery()
@@ -166,7 +166,7 @@ class MidcomApplication extends RequestAware
 
     public function set_pagetitle($title)
     {
-        $this->request->attributes->set('midcom_title', $title);
+        $this->head->set_pagetitle($title);
     }
 
     public function bind_view_to_object($object)
