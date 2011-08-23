@@ -32,6 +32,11 @@ Do this by editing your `config.yml`. If your components are installed in the `m
     midgard_midcom_compat:
         root: "%kernel.root_dir%/../midcom"
 
+In addition, you need to register the `midcom` templating engine, so that templates used by components work. Do this in the `config.yml` by editing the `framework` section:
+
+    framework:
+        templating:      { engines: ['twig', 'midcom'] }
+
 You also need to register all components you want to use as Symfony2 Bundles in your Kernel:
 
     new Midgard\MidcomCompatBundle\Bundle\ComponentBundle('net.nehmer.static')
