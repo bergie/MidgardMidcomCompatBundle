@@ -138,7 +138,11 @@ class midcom_services_auth extends ContainerAware
             return null;
         }
 
-        $person = $user->getMidgardUser()->get_person();
+        $mgdUser = $user->getMidgardUser();
+        if (!$mgdUser) {
+            return null;
+        }
+        $person = $mgdUser->get_person();
         return new midcom_db_person($person);
     }
 
