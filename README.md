@@ -21,7 +21,7 @@ And enable this bundle in your Kernel:
 
     new Midgard\MidcomCompatBundle\MidgardMidcomCompatBundle()
 
-You also need a Midgard2 repository connection, so ensure that you also have the [MidgardConnectionBundle](https://github.com/bergie/MidgardConnectionBundle) installed and configured.
+You also need a Midgard2 repository connection, so ensure that you also have the [MidgardConnectionBundle](https://github.com/bergie/MidgardConnectionBundle) installed and configured. You'll also need [MidgardToolbarBundle](https://github.com/bergie/MidgardToolbarBundle) for the MidCOM toolbars.
 
 ## Configuration
 
