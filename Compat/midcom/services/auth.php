@@ -107,7 +107,11 @@ class midcom_services_auth extends ContainerAware
         return true;
     }
 
-    public function get_user()
+    public function get_user($id)
+    {
+    }
+
+    public function get_group($id)
     {
     }
 
@@ -143,7 +147,7 @@ class midcom_services_auth extends ContainerAware
             return null;
         }
         $person = $mgdUser->get_person();
-        return new midcom_db_person($person);
+        return new midcom_core_user($person->guid);
     }
 
     public function __get($key)

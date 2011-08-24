@@ -19,7 +19,7 @@ class midcom_config implements arrayaccess
         'auth_success_callback' => null,
         'auth_failure_callback' => null,
         'auth_allow_trusted' => false,
-        'person_class' => 'midgard_person',
+        'person_class' => 'openpsa_person',
 
         'auth_backend_simple_cookie_path' => 'auto',
         'auth_backend_simple_cookie_domain' => null,
@@ -147,8 +147,8 @@ class midcom_config implements arrayaccess
 
         'wrap_style_show_with_name' => false,
 
-        'jquery_version' => '1.5.2.min',
-        'jquery_ui_version' => '1.8.11',
+        'jquery_version' => '1.6.2.min',
+        'jquery_ui_version' => '1.8.16',
         'jquery_ui_theme' => null,
         'jquery_load_from_google' => false,
         'enable_ajax_editing' => false,

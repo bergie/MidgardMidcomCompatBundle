@@ -16,6 +16,11 @@ class midcom_baseclasses_core_dbobject
         return $object->__exec_update();
     }
 
+    public static function get_parent($object)
+    {
+        return $object->__object->get_parent();
+    }
+
     public static function get_by_path($object, $path)
     {
         $object->__exec_get_by_path((string) $path);

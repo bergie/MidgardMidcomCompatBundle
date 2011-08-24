@@ -22,4 +22,9 @@ class midcom_services_i18n extends ContainerAware
     {
         return array();
     }
+
+    public function get_language_db()
+    {
+        return array('en' => array('locale' => 'en_US'));
+    }
 }
