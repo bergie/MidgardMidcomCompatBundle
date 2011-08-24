@@ -19,7 +19,7 @@ class midcom_config implements arrayaccess
         'auth_success_callback' => null,
         'auth_failure_callback' => null,
         'auth_allow_trusted' => false,
-        'person_class' => 'midgard_person',
+        'person_class' => 'openpsa_person',
 
         'auth_backend_simple_cookie_path' => 'auto',
         'auth_backend_simple_cookie_domain' => null,
