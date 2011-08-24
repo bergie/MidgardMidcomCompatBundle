@@ -89,7 +89,20 @@ class midcom_services_head extends RequestAware
 
     public function add_jquery_ui_theme(array $components = array())
     {
-
+        if (!empty($GLOBALS['midcom_config']['jquery_ui_theme']))
+        {
+            $this->add_stylesheet($GLOBALS['midcom_config']['jquery_ui_theme']);
+        }
+        else
+        {
+            $url_prefix = MIDCOM_JQUERY_UI_URL . '/themes/base/minified/jquery.ui.';
+            $this->add_stylesheet($url_prefix . 'theme.min.css');
+            $this->add_stylesheet($url_prefix . 'core.min.css');
+            foreach ($components as $component)
+            {
+                $this->add_stylesheet($url_prefix . $component . '.min.css');
+            }
+        }
     }
 
     public function print_head_elements()
