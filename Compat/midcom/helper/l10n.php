@@ -14,14 +14,7 @@ class midcom_helper_l10n
 
     public function get($string, $language = null)
     {
-        if ($language) {
-            $orig = $this->translator->getLocale();
-            $this->translator->setLocale($language);
-            $translation = $this->translator->trans($string, array(), $this->component);
-            $this->translator->setLocale($orig);
-            return $translation;
-        }
-        return $this->translator->trans($string, array(), $this->component);
+        return $this->translator->trans($string, array(), $this->component, $language);
     }
 
     public function string_available($string)
