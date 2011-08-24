@@ -107,7 +107,11 @@ class midcom_services_auth extends ContainerAware
         return true;
     }
 
-    public function get_user()
+    public function get_user($id)
+    {
+    }
+
+    public function get_group($id)
     {
     }
 
