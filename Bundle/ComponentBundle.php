@@ -106,6 +106,8 @@ class ComponentBundle extends ContainerAware implements BundleInterface
             // Load main DBA mappings
             $_MIDCOM->dbclassloader->load_classes('midcom', 'core_classes.inc');
             $_MIDCOM->dbclassloader->load_classes('midcom', 'legacy_classes.inc');
+            $context = new \midcom_core_context(0);
+            $context->set_current();
         }
     }
 
