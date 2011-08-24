@@ -197,4 +197,9 @@ class MidcomApplication extends RequestAware
     {
         return '';
     }
+
+    public function get_host_prefix()
+    {
+        return '';
+    }
 }
