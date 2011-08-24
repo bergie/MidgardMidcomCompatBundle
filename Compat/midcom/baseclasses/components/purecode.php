@@ -5,8 +5,14 @@ use Symfony\Component\Config\FileLocator;
 
 abstract class midcom_baseclasses_components_purecode
 {
+    public $_component;
+
     public function __construct()
     {
+        if ($this->_component == '')
+        {
+            $this->_component = preg_replace('/^(.+?)_(.+?)_(.+?)_.+/', '$1.$2.$3', get_class($this));
+        }
     }
 
     private function loadConfig()
