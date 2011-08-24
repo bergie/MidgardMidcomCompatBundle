@@ -15,6 +15,27 @@ class midcom_services_dbfactory
         return $mc;
     }
 
+    public function get_object_by_guid($guid)
+    {
+        try
+        {
+            $tmp = midgard_object_class::get_object_by_guid($guid);
+        }
+        catch (midgard_error_exception $e)
+        {
+            debug_add('Loading object by GUID ' . $guid . ' failed, reason: ' . $e->getMessage(), MIDCOM_LOG_INFO);
+
+            throw new midcom_error_midgard($e, $guid);
+        }
+        if (   get_class($tmp) == 'midgard_person'
+            && $GLOBALS['midcom_config']['person_class'] != 'midgard_person')
+        {
+            $tmp = new $GLOBALS['midcom_config']['person_class']($guid);
+        }
+
+        return $this->convert_midgard_to_midcom($tmp);
+    }
+
     public function convert_midgard_to_midcom(midgard_object $object)
     {
         $classname = $_MIDCOM->dbclassloader->get_midcom_class_name_for_mgdschema_object($object);
