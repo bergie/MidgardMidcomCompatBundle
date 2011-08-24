@@ -1,3 +1,7 @@
 _midcom_permalink:
     pattern: /midcom-permalink-{guid}
     defaults: { _controller: "MidgardMidcomCompatBundle:Permalink:redirect" }
+
+_midcom_exec:
+    pattern: /midcom-exec-{bundle}/{file}
+    defaults: { _controller: "MidgardMidcomCompatBundle:Execution:exec" }
