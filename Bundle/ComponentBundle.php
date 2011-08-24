@@ -136,6 +136,11 @@ class ComponentBundle extends ContainerAware implements BundleInterface
         return $this->container->getParameter('midgard.midcomcompat.root') . "/" . str_replace('.', '/', $this->name);
     }
 
+    public function getStaticPath()
+    {
+        return realpath($this->container->getParameter('midgard.midcomcompat.root') . "/../static/{$this->name}");
+    }
+
     public function registerCommands(Application $application)
     {
     }
