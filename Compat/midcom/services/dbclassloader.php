@@ -8,11 +8,14 @@ class midcom_services_dbclassloader extends ContainerAware
 {
     private $mappings = array();
 
-    public function load_classes($component, $filename)
+    public function load_classes($component, $filename, $definitions = null)
     {
-        $path = $this->container->getParameter('midgard.midcomcompat.root') . '/' . str_replace('.', '/', $component) . '/config';
-        $loader = new MidcomArrayLoader(new FileLocator($path));
-        $definitions = $loader->load($filename);
+        if (null === $definitions)
+        {
+            $path = $this->container->getParameter('midgard.midcomcompat.root') . '/' . str_replace('.', '/', $component) . '/config';
+            $loader = new MidcomArrayLoader(new FileLocator($path));
+            $definitions = $loader->load($filename);
+        }
         foreach ($definitions as $mgdschema => $midcom)
         {
             $this->mappings[$mgdschema] = $midcom;

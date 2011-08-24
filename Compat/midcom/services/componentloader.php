@@ -7,6 +7,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class midcom_services_componentloader extends ContainerAware
 {
     private $loadedBundles = array();
+    private $manifests = array();
 
     public function setContainer(ContainerInterface $container = null)
     {
@@ -54,6 +55,12 @@ class midcom_services_componentloader extends ContainerAware
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    public function load_manifest(midcom_core_manifest $manifest)
+    {
+        $this->manifests[$manifest->name] = $manifest;
+        $_MIDCOM->dbclassloader->load_classes($manifest->name, null, $manifest->class_mapping);
     }
 
 }
