@@ -166,6 +166,6 @@ class ComponentBundle extends ContainerAware implements BundleInterface
 
     public function resolvePermalink(\midgard_topic $topic, $guid)
     {
-        return $this->interface->_on_resolve_permalink($topic, $guid, $this->getConfig());
+        return $this->interface->_on_resolve_permalink($topic, $this->getConfig(), $guid);
     }
 }
