@@ -13,6 +13,7 @@ abstract class midcom_baseclasses_components_handler
 
     public function add_stylesheet($url, $media = false)
     {
+        $_MIDCOM->add_link_head(array('rel' => 'stylesheet', 'type' => 'text/css', 'href' => $url, $media));
     }
 
     public function add_breadcrumb($url, $title)
