@@ -68,4 +68,9 @@ class midcom_helper_toolbar
     {
         return $this->toolbar->render();
     }
+
+    function bind_to(&$object)
+    {
+
+    }
 }
