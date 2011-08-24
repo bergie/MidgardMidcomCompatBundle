@@ -202,4 +202,8 @@ class MidcomApplication extends RequestAware
     {
         return '';
     }
+
+    public function dynamic_load($url, $config = array(), $pass_get = false)
+    {
+    }
 }
