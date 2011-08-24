@@ -138,6 +138,11 @@ class MidcomApplication extends RequestAware
         $this->head->add_jquery_state_script($script, $state);
     }
 
+    public function add_stylesheet($url, $media = false)
+    {
+        $this->head->add_stylesheet($url, $media);
+    }
+
     public function enable_jquery()
     {
         $this->head->enable_jquery();
