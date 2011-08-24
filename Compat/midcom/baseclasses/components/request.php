@@ -7,6 +7,8 @@ abstract class midcom_baseclasses_components_request
 {
     public $_topic = null;
     public $_config = null;
+    public $_l10n = null;
+    public $_l10n_midcom = null;
     public $_request_data = array();
     public $_request_switch = array();
 
@@ -76,6 +78,7 @@ abstract class midcom_baseclasses_components_request
     {
         $controllerClass = $request->attributes->get('midcom_controller');
         $controller = new $controllerClass();
+        $controller->set_master($this);
         $controller->_config = $this->_config;
         $controller->_node_toolbar = $this->_node_toolbar;
         $controller->_view_toolbar = $this->_view_toolbar;

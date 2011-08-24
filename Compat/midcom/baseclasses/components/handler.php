@@ -4,8 +4,13 @@ abstract class midcom_baseclasses_components_handler
     public $_component = '';
     public $_config;
     public $_request_data = array();
-
+    private $_master = null;
     private $_services = array();
+
+    public function set_master(midcom_baseclasses_components_request $master)
+    {
+        $this->_master = $master;
+    }
 
     public function _on_initialize()
     {
