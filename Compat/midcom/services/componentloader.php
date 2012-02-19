@@ -57,6 +57,12 @@ class midcom_services_componentloader extends ContainerAware
         }
     }
 
+    public function load_library($path)
+    {
+        //TODO: This should check if it's really purecode
+        return $this->load($path);
+    }
+
     public function load_manifest(midcom_core_manifest $manifest)
     {
         $this->manifests[$manifest->name] = $manifest;

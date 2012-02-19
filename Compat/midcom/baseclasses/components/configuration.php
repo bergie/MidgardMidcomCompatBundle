@@ -15,4 +15,24 @@ abstract class midcom_baseclasses_components_configuration
         }
         return null;
     }
+
+    public static function read_array_from_file($filename)
+    {
+        if (!file_exists($filename))
+        {
+            return array();
+        }
+
+        try
+        {
+            $data = file_get_contents($filename);
+        }
+        catch (Exception $e)
+        {
+            return false;
+        }
+
+        return midcom_helper_misc::parse_config($data);
+    }
+
 }

@@ -1,11 +1,10 @@
 <?php
-abstract class midcom_baseclasses_components_handler
+abstract class midcom_baseclasses_components_handler extends midcom_baseclasses_components_base
 {
     public $_component = '';
     public $_config;
     public $_request_data = array();
     protected $_master = null;
-    private $_services = array();
 
     public function set_master(midcom_baseclasses_components_request $master)
     {
@@ -27,34 +26,6 @@ abstract class midcom_baseclasses_components_handler
 
     public function set_active_leaf($leaf_id)
     {
-    }
-
-    public function __get($field)
-    {
-        if (array_key_exists($field, $this->_services))
-        {
-            return $this->_services[$field];
-        }
-
-        $instance = null;
-        switch ($field)
-        {
-            case '_i18n':
-                $instance = $_MIDCOM->get_service('i18n');
-                break;
-            case '_l10n':
-                $instance = $_MIDCOM->i18n->get_l10n($this->_component);
-                break;
-            case '_l10n_midcom':
-                $instance = $_MIDCOM->i18n->get_l10n('midcom');
-                break;
-            default:
-                debug_add('Component ' . $this->_component . ' tried to access nonexistant service "' . $field . '"', MIDCOM_LOG_ERROR);
-                debug_print_function_stack('Called from here:');
-                return false;
-        }
-        $this->_services[$field] = $instance;
-        return $this->_services[$field];
     }
 
     public function get_controller($type, $object = null)

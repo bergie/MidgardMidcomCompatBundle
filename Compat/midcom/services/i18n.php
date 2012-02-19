@@ -18,6 +18,11 @@ class midcom_services_i18n extends ContainerAware
         return 'en';
     }
 
+    public function get_fallback_language()
+    {
+        return 'en';
+    }
+
     public function list_languages()
     {
         return array();

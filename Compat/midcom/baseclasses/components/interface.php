@@ -1,5 +1,5 @@
 <?php
-abstract class midcom_baseclasses_components_interface
+abstract class midcom_baseclasses_components_interface extends midcom_baseclasses_components_base
 {
     protected $_autoload_files = array();
     protected $_autoload_libraries = array();
